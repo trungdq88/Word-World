@@ -5,24 +5,19 @@ package com.fpt.model;
  */
 public class Word {
     public int id;
-    public int word_id;
     public String the_word;
     public String description;
     public int status;
     public long created;
 
-    public Word(int id, int word_id, String the_word, String description, int status, long created) {
+    public Word(int id, String the_word, String description, int status, long created) {
         this.id = id;
-        this.word_id = word_id;
         this.the_word = the_word;
         this.description = description;
         this.status = status;
         this.created = created;
     }
-
-    public Word(int word_id, String the_word, String description, int status, long created) {
-        this.id = id;
-        this.word_id = word_id;
+    public Word(String the_word, String description, int status, long created) {
         this.the_word = the_word;
         this.description = description;
         this.status = status;
@@ -37,8 +32,8 @@ public class Word {
         Word word = (Word) o;
 
         if (created != word.created) return false;
+        if (id != word.id) return false;
         if (status != word.status) return false;
-        if (word_id != word.word_id) return false;
         if (description != null ? !description.equals(word.description) : word.description != null)
             return false;
         if (!the_word.equals(word.the_word)) return false;
@@ -48,10 +43,11 @@ public class Word {
 
     @Override
     public int hashCode() {
-        int result = word_id;
+        int result = id;
         result = 31 * result + the_word.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + status;
+        result = 31 * result + (int) (created ^ (created >>> 32));
         return result;
     }
 
@@ -59,7 +55,6 @@ public class Word {
     public String toString() {
         return "Word{" +
                 "id=" + id +
-                ", word_id=" + word_id +
                 ", the_word='" + the_word + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +

@@ -1,15 +1,12 @@
 package com.fpt.model.dal;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.net.Uri;
-import android.provider.MediaStore;
 
 import com.fpt.model.Article;
 import com.fpt.provider.WWDBContract;
-import com.fpt.provider.WWDBContract.*;
+import com.fpt.provider.WWDBContract.Tables;
 import com.fpt.provider.WWDatabase;
 import com.fpt.provider.helper.Query;
 
@@ -33,7 +30,6 @@ public class ArticleDAL {
         LOGD(TAG, "Adding an article");
 
         ContentValues cv = new ContentValues();
-        cv.put(WWDBContract.Article.ARTICLE_ID, article.article_id);
         cv.put(WWDBContract.Article.TITLE, article.content);
         cv.put(WWDBContract.Article.CONTENT, article.content);
         cv.put(WWDBContract.Article.URL, article.url);
@@ -56,12 +52,11 @@ public class ArticleDAL {
         List<Article> articles = new ArrayList<Article>();
         for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             int _id = c.getInt(c.getColumnIndex(WWDBContract.Article._ID));
-            int articleId = c.getInt(c.getColumnIndex(WWDBContract.Article.ARTICLE_ID));
             String articleUrl = c.getString(c.getColumnIndex(WWDBContract.Article.URL));
             String articleTitle = c.getString(c.getColumnIndex(WWDBContract.Article.TITLE));
             String articleContent = c.getString(c.getColumnIndex(WWDBContract.Article.CONTENT));
             long created = c.getLong(c.getColumnIndex(WWDBContract.Article.CREATED));
-            articles.add(new Article(_id, articleId, articleUrl, articleTitle, articleContent, created));
+            articles.add(new Article(_id, articleUrl, articleTitle, articleContent, created));
         }
         if (c != null) {
             c.close();
@@ -78,7 +73,7 @@ public class ArticleDAL {
         WWDatabase db = new WWDatabase(context);
         Cursor c = db.getWritableDatabase().query(Tables.ARTICLE,
                 Query.Projections.ARTICLE_PROJECTION,
-                WWDBContract.Article.ARTICLE_ID + "=?", // Selection strings
+                WWDBContract.Article._ID + "=?", // Selection strings
                 new String[]{String.valueOf(id)}, // Select args
                 null, // groyp by
                 null, // having
@@ -86,12 +81,11 @@ public class ArticleDAL {
 
         for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             int _id = c.getInt(c.getColumnIndex(WWDBContract.Article._ID));
-            int articleId = c.getInt(c.getColumnIndex(WWDBContract.Article.ARTICLE_ID));
             String articleUrl = c.getString(c.getColumnIndex(WWDBContract.Article.URL));
             String articleTitle = c.getString(c.getColumnIndex(WWDBContract.Article.TITLE));
             String articleContent = c.getString(c.getColumnIndex(WWDBContract.Article.CONTENT));
             long created = c.getLong(c.getColumnIndex(WWDBContract.Article.CREATED));
-            return (new Article(_id, articleId, articleUrl, articleTitle, articleContent, created));
+            return (new Article(_id, articleUrl, articleTitle, articleContent, created));
         }
         if (c != null) {
             c.close();
@@ -106,7 +100,7 @@ public class ArticleDAL {
         LOGD(TAG, "Delete Article By Id");
         WWDatabase db = new WWDatabase(context);
         int result = db.getWritableDatabase().delete(Tables.ARTICLE,
-                WWDBContract.Article.ARTICLE_ID + "=?",
+                WWDBContract.Article._ID + "=?",
                 new String[]{String.valueOf(id)});
         return result > 0;
     }

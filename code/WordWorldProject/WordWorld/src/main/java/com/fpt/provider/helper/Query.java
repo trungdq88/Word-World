@@ -31,7 +31,6 @@ public class Query {
     public interface Projections {
         String[] ARTICLE_PROJECTION = {
                 BaseColumns._ID,
-                Article.ARTICLE_ID,
                 Article.TITLE,
                 Article.URL,
                 Article.CONTENT,
@@ -42,7 +41,6 @@ public class Query {
         };
         String[] WORD_PROJECTION = {
                 BaseColumns._ID,
-                Word.WORD_ID,
                 Word.THE_WORD,
                 Word.DESCRIPTION,
                 Word.STATUS,

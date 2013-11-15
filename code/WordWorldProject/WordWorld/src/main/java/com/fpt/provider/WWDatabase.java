@@ -9,8 +9,7 @@ import static com.fpt.util.LogUtils.LOGD;
 import static com.fpt.util.LogUtils.makeLogTag;
 
 /**
- * helper for managing {@link android.database.sqlite.SQLiteDatabase} that stores data for
- * {@link com.fpt.provider.WWProvider}.
+ * helper for managing {@link android.database.sqlite.SQLiteDatabase}
  */
 public class WWDatabase extends SQLiteOpenHelper {
     private static final String TAG = makeLogTag(WWDatabase.class);
@@ -67,24 +66,22 @@ public class WWDatabase extends SQLiteOpenHelper {
          */
         db.execSQL("CREATE TABLE " + Tables.ARTICLE + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + ArticleColumns.ARTICLE_ID + " INTEGER,"
                 + ArticleColumns.CONTENT + " TEXT NOT NULL,"
                 + ArticleColumns.TITLE + " TEXT NOT NULL,"
                 + ArticleColumns.URL + " TEXT NOT NULL,"
                 + ArticleColumns.CREATED + " INTEGER NOT NULL,"
-                + "UNIQUE (" + ArticleColumns.ARTICLE_ID + ") ON CONFLICT REPLACE)");
+                + "UNIQUE (" + BaseColumns._ID + ") ON CONFLICT REPLACE)");
 
         /**
          * Word table
          */
         db.execSQL("CREATE TABLE " + Tables.WORD + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + WordColumns.WORD_ID + " INTEGER,"
                 + WordColumns.THE_WORD + " TEXT NOT NULL,"
                 + WordColumns.DESCRIPTION + " TEXT,"
                 + WordColumns.STATUS + " INTEGER NOT NULL,"
                 + WordColumns.CREATED + " INTEGER NOT NULL,"
-                + "UNIQUE (" + WordColumns.WORD_ID + ") ON CONFLICT REPLACE)");
+                + "UNIQUE (" + BaseColumns._ID + ") ON CONFLICT REPLACE)");
 
         // Full-text search index. Update using updateSessionSearchIndex method.
         // Use the porter tokenizer for simple stemming, so that "frustration" matches "frustrated."

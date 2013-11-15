@@ -25,7 +25,6 @@ public class WordDAL {
         LOGD(TAG, "Adding an word");
 
         ContentValues cv = new ContentValues();
-        cv.put(WWDBContract.Word.WORD_ID, word.word_id);
         cv.put(WWDBContract.Word.THE_WORD, word.the_word);
         cv.put(WWDBContract.Word.DESCRIPTION, word.description);
         cv.put(WWDBContract.Word.STATUS, word.status);
@@ -51,12 +50,11 @@ public class WordDAL {
 
         for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             int _id = c.getInt(c.getColumnIndex(WWDBContract.Word._ID));
-            int wordId = c.getInt(c.getColumnIndex(WWDBContract.Word.WORD_ID));
             String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
             String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
             int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
             long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
-            words.add(new Word(_id, wordId, wordTheWord, wordDescription, wordStatus, wordCreated));
+            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
         }
         if (c != null) {
             c.close();
@@ -88,12 +86,11 @@ public class WordDAL {
 
         for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             int _id = c.getInt(c.getColumnIndex(WWDBContract.Word._ID));
-            int wordId = c.getInt(c.getColumnIndex(WWDBContract.Word.WORD_ID));
             String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
             String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
             int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
             long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
-            words.add(new Word(_id, wordId, wordTheWord, wordDescription, wordStatus, wordCreated));
+            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
         }
         if (c != null) {
             c.close();
@@ -106,7 +103,7 @@ public class WordDAL {
         WWDatabase db = new WWDatabase(context);
         Cursor c = db.getWritableDatabase().query(WWDBContract.Tables.WORD,
                 Query.Projections.WORD_PROJECTION,
-                WWDBContract.Word.WORD_ID + "=?", // Selection strings
+                WWDBContract.Word._ID + "=?", // Selection strings
                 new String[]{String.valueOf(id)}, // Select args
                 null, // groyp by
                 null, // having
@@ -114,12 +111,11 @@ public class WordDAL {
 
         for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             int _id = c.getInt(c.getColumnIndex(WWDBContract.Word._ID));
-            int wordId = c.getInt(c.getColumnIndex(WWDBContract.Word.WORD_ID));
             String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
             String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
             int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
             long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
-            return (new Word(_id, wordId, wordTheWord, wordDescription, wordStatus, wordCreated));
+            return (new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
         }
         if (c != null) {
             c.close();
@@ -131,7 +127,7 @@ public class WordDAL {
         LOGD(TAG, "Delete Word By Id");
         WWDatabase db = new WWDatabase(context);
         int result = db.getWritableDatabase().delete(WWDBContract.Tables.WORD,
-                WWDBContract.Word.WORD_ID + "=?",
+                WWDBContract.Word._ID + "=?",
                 new String[]{String.valueOf(id)});
         return result > 0;
     }
