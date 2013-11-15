@@ -1,7 +1,9 @@
 package com.fpt.provider;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
+import static com.fpt.provider.helper.Query.URI.*;
 /**
  * Created by Quang Trung on 11/15/13.
  */
@@ -29,11 +31,18 @@ public class WWDBContract {
         String CREATED = "word_created";
     }
 
+
+
+    public static final String CONTENT_AUTHORITY = "com.fpt.provider";
+
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
     /**
      * Article Class
      */
     public static final class Article implements ArticleColumns, BaseColumns {
-
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_ARTICLE).build();
     }
 
     /**

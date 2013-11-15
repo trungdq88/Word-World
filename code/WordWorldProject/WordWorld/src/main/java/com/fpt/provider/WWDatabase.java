@@ -78,34 +78,13 @@ public class WWDatabase extends SQLiteOpenHelper {
          */
         db.execSQL("CREATE TABLE " + Tables.WORD + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + ArticleColumns.ARTICLE_ID + " INTEGER,"
-                + ArticleColumns.CONTENT + " TEXT NOT NULL,"
-                + ArticleColumns.URL + " TEXT NOT NULL,"
-                + ArticleColumns.CREATED + " INTEGER NOT NULL,"
-                + "UNIQUE (" + ArticleColumns.ARTICLE_ID + ") ON CONFLICT REPLACE)");
+                + WordColumns.WORD_ID + " INTEGER,"
+                + WordColumns.THE_WORD + " TEXT NOT NULL,"
+                + WordColumns.DESCRIPTION + " TEXT,"
+                + WordColumns.STATUS + " INTEGER NOT NULL,"
+                + WordColumns.CREATED + " INTEGER NOT NULL,"
+                + "UNIQUE (" + WordColumns.WORD_ID + ") ON CONFLICT REPLACE)");
 
-/*
-        db.execSQL("CREATE TABLE " + Tables.CHORD + " ("
-                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + ChordsColumns.CHORD_ID + " INTEGER,"
-                + ChordsColumns.CHORD_NAME + " TEXT NOT NULL,"
-                + ChordsColumns.CHORD_RELATION + " TEXT,"
-                + "UNIQUE (" + ChordsColumns.CHORD_ID + ") ON CONFLICT REPLACE)");
-
-        db.execSQL("CREATE TABLE " + Tables.SONG + " ("
-                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + SongsColumns.SONG_ID + " INTEGER,"
-                + SongsColumns.SONG_TITLE + " TEXT NOT NULL,"
-                + SongsColumns.SONG_LINK + " TEXT,"
-                + SongsColumns.SONG_CONTENT + " TEXT,"
-                + SongsColumns.SONG_FIRST_LYRIC + " TEXT,"
-                + SongsColumns.SONG_DATE + " TEXT,"
-                + SongsColumns.SONG_TITLE_ASCII + " TEXT,"
-                + SongsColumns.SONG_LASTVIEW + " INTEGER,"
-                + SongsColumns.SONG_ISFAVORITE + " INTEGER,"
-                + SongsColumns.SONG_RHYTHM + " TEXT,"
-                + "UNIQUE (" + SongsColumns.SONG_ID + ") ON CONFLICT REPLACE)");
-        */
         // Full-text search index. Update using updateSessionSearchIndex method.
         // Use the porter tokenizer for simple stemming, so that "frustration" matches "frustrated."
 
