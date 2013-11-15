@@ -60,11 +60,25 @@ public class DatabaseTestActivity extends ActionBarActivity {
 //        List<Word> result = WordDAL.getAllWords(getApplicationContext());
 //        str += ">> words: " + DisplayUtils.arrayToString(result);
 
-        Word w = WordDAL.getWordById(getApplicationContext(), 1);
-        str += " ++ words: " + w;
-        WordDAL.deleteWordById(getApplicationContext(), 1);
-        Word w2 = WordDAL.getWordById(getApplicationContext(), 1);
-        str += " -- words: " + w2;
+//        Word w = WordDAL.getWordById(getApplicationContext(), 1);
+//        str += " ++ words: " + w;
+//        WordDAL.deleteWordById(getApplicationContext(), 1);
+//        Word w2 = WordDAL.getWordById(getApplicationContext(), 1);
+//        str += " -- words: " + w2;
+
+//        Word w1 = new Word(1, "the", "the the", 1, (new Date()).getTime());
+//        Word w2 = new Word(2, "the2", "the the2", 0, (new Date()).getTime());
+//        Word w3 = new Word(3, "the3", "the the3", 1, (new Date()).getTime());
+//        Word w4 = new Word(4, "the4", "the the4", 1, (new Date()).getTime());
+//        WordDAL.insertWord(getApplicationContext(), w1);
+//        WordDAL.insertWord(getApplicationContext(), w2);
+//        WordDAL.insertWord(getApplicationContext(), w3);
+//        WordDAL.insertWord(getApplicationContext(), w4);
+
+        List<Word> result = WordDAL.getAllWords(getApplicationContext(), 1, 2);
+
+        str += "wordss: " + DisplayUtils.arrayToString(result);
+
         textView.setText(str);
 
     }

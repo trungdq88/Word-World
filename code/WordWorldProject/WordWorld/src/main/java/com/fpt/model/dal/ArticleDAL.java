@@ -34,6 +34,7 @@ public class ArticleDAL {
 
         ContentValues cv = new ContentValues();
         cv.put(WWDBContract.Article.ARTICLE_ID, article.article_id);
+        cv.put(WWDBContract.Article.TITLE, article.content);
         cv.put(WWDBContract.Article.CONTENT, article.content);
         cv.put(WWDBContract.Article.URL, article.url);
         cv.put(WWDBContract.Article.CREATED, article.created);
@@ -57,9 +58,10 @@ public class ArticleDAL {
             int _id = c.getInt(c.getColumnIndex(WWDBContract.Article._ID));
             int articleId = c.getInt(c.getColumnIndex(WWDBContract.Article.ARTICLE_ID));
             String articleUrl = c.getString(c.getColumnIndex(WWDBContract.Article.URL));
+            String articleTitle = c.getString(c.getColumnIndex(WWDBContract.Article.TITLE));
             String articleContent = c.getString(c.getColumnIndex(WWDBContract.Article.CONTENT));
             long created = c.getLong(c.getColumnIndex(WWDBContract.Article.CREATED));
-            articles.add(new Article(_id, articleId, articleUrl, articleContent, created));
+            articles.add(new Article(_id, articleId, articleUrl, articleTitle, articleContent, created));
         }
         if (c != null) {
             c.close();
@@ -86,9 +88,10 @@ public class ArticleDAL {
             int _id = c.getInt(c.getColumnIndex(WWDBContract.Article._ID));
             int articleId = c.getInt(c.getColumnIndex(WWDBContract.Article.ARTICLE_ID));
             String articleUrl = c.getString(c.getColumnIndex(WWDBContract.Article.URL));
+            String articleTitle = c.getString(c.getColumnIndex(WWDBContract.Article.TITLE));
             String articleContent = c.getString(c.getColumnIndex(WWDBContract.Article.CONTENT));
             long created = c.getLong(c.getColumnIndex(WWDBContract.Article.CREATED));
-            return (new Article(_id, articleId, articleUrl, articleContent, created));
+            return (new Article(_id, articleId, articleUrl, articleTitle, articleContent, created));
         }
         if (c != null) {
             c.close();

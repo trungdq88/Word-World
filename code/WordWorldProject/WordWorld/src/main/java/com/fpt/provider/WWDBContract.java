@@ -19,6 +19,7 @@ public class WWDBContract {
     interface ArticleColumns {
         String ARTICLE_ID = "article_id";
         String URL = "article_url";
+        String TITLE = "article_title";
         String CONTENT = "article_content";
         String CREATED = "article_created";
     }
@@ -43,6 +44,7 @@ public class WWDBContract {
     public static final class Article implements ArticleColumns, BaseColumns {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_ARTICLE).build();
+
     }
 
     /**

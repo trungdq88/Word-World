@@ -69,6 +69,7 @@ public class WWDatabase extends SQLiteOpenHelper {
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + ArticleColumns.ARTICLE_ID + " INTEGER,"
                 + ArticleColumns.CONTENT + " TEXT NOT NULL,"
+                + ArticleColumns.TITLE + " TEXT NOT NULL,"
                 + ArticleColumns.URL + " TEXT NOT NULL,"
                 + ArticleColumns.CREATED + " INTEGER NOT NULL,"
                 + "UNIQUE (" + ArticleColumns.ARTICLE_ID + ") ON CONFLICT REPLACE)");

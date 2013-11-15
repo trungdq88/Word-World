@@ -32,6 +32,7 @@ public class Query {
         String[] ARTICLE_PROJECTION = {
                 BaseColumns._ID,
                 Article.ARTICLE_ID,
+                Article.TITLE,
                 Article.URL,
                 Article.CONTENT,
                 Article.CREATED

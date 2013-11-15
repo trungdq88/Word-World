@@ -35,12 +35,54 @@ public class WordDAL {
         return db.getWritableDatabase().insert(WWDBContract.Tables.WORD, "", cv) > 0;
     }
 
+    /**
+     * Get all words, include status 1 and status 0 words.
+     * @param context
+     * @return
+     */
     public static List<Word> getAllWords(Context context) {
         LOGD(TAG, "Get All Words");
         WWDatabase ww = new WWDatabase(context);
         Cursor c = ww.getWritableDatabase().query(WWDBContract.Tables.WORD,
                 Query.Projections.WORD_PROJECTION,
                 null, null, null, null, null);
+
+        List<Word> words = new ArrayList<Word>();
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex(WWDBContract.Word._ID));
+            int wordId = c.getInt(c.getColumnIndex(WWDBContract.Word.WORD_ID));
+            String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
+            String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
+            int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
+            words.add(new Word(_id, wordId, wordTheWord, wordDescription, wordStatus, wordCreated));
+        }
+        if (c != null) {
+            c.close();
+        }
+        return words;
+    }
+
+
+    /**
+     * Get all words, include status 1 and status 0 words. LIMIT offset, length (use for pagination)
+     * @param context
+     * @param offset
+     * @param length
+     * @return
+     */
+    public static List<Word> getAllWords(Context context, int offset, int length) {
+        LOGD(TAG, "Get All Words");
+        WWDatabase ww = new WWDatabase(context);
+        Cursor c = ww.getWritableDatabase().query(WWDBContract.Tables.WORD,
+                Query.Projections.WORD_PROJECTION,
+                null,
+                null,
+                null,
+                null,
+                null,
+                " " + offset + ", " + length);
 
         List<Word> words = new ArrayList<Word>();
 
