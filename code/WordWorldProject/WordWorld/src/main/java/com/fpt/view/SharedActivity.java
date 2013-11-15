@@ -4,16 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +41,6 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[] {
-                                "huynh quang thao",
                                 getString(R.string.title_section1),
                                 getString(R.string.title_section2),
                                 getString(R.string.title_section3),
@@ -57,11 +50,11 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
 
 
         /** extra parameters send from browser */
-      /*  Intent intent = this.getIntent();
+        Intent intent = this.getIntent();
         Bundle extras = this.getIntent().getExtras();
         String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-        *//*Toast.makeText(this.getBaseContext(), "Debug " + sharedText, Toast.LENGTH_LONG);
-        Log.e("Debug",  "Debug " + sharedText );*/
+        Toast.makeText(this.getBaseContext(), "Debug " + sharedText, Toast.LENGTH_LONG);
+        Log.e("Debug",  "Debug " + sharedText );
 
         Fragment fragment = new WebviewFragment();
         Bundle arguments = new Bundle();
