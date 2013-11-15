@@ -12,5 +12,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_shared">Shared Activity</string>
     <string name="title_activity_database_test">Database Test</string>
+    <string name="title_activity_word_view_fragment">WordViewFragment</string>
+    <string name="title_activity_article_view_fragment">ArticleViewFragment</string>
 
 </resources>
