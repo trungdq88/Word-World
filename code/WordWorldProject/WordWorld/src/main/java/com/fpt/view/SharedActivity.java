@@ -9,10 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fpt.view.com.fpt.view.fragment.WebviewFragment;
+import com.fpt.view.fragment.WebviewFragment;
 
 public class SharedActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 

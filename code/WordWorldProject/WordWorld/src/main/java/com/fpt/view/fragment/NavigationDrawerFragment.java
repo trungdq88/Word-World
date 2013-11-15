@@ -1,4 +1,4 @@
-package com.fpt.view.com.fpt.view.fragment;
+package com.fpt.view.fragment;
 
 import android.support.v7.app.ActionBarActivity;;
 import android.app.Activity;
