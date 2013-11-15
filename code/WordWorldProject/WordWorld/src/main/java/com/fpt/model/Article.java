@@ -8,7 +8,24 @@ public class Article {
     public int article_id;
     public String url;
     public String content;
-    public int created;
+    public long created;
+
+    public Article(int id, int article_id, String url, String content, long created) {
+        this.id = id;
+        this.article_id = article_id;
+        this.url = url;
+        this.content = content;
+        this.created = created;
+    }
+
+    public Article(int article_id, String url, String content, long created) {
+        this.article_id = article_id;
+        this.url = url;
+        this.content = content;
+        this.created = created;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -30,7 +47,6 @@ public class Article {
         int result = article_id;
         result = 31 * result + url.hashCode();
         result = 31 * result + content.hashCode();
-        result = 31 * result + created;
         return result;
     }
 

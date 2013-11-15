@@ -12,6 +12,15 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.TextView;
 
+import com.fpt.model.Article;
+import com.fpt.model.dal.ArticleDAL;
+import com.fpt.provider.WWDBContract;
+import com.fpt.provider.WWDatabase;
+import com.fpt.util.DisplayUtils;
+
+import java.util.Date;
+import java.util.List;
+
 public class DatabaseTestActivity extends ActionBarActivity {
 
     @Override
@@ -25,8 +34,22 @@ public class DatabaseTestActivity extends ActionBarActivity {
                     .commit();
         }
 
+        // delete database
+        //WWDatabase.deleteDatabase(getApplicationContext());
+
         TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText("ASD");
+        String str = "";
+
+        Article a = new Article(2, "http://google.com", "hello mot hai ba", (new Date()).getTime());
+        ArticleDAL.insertArticle(getApplicationContext(), a);
+        List<Article> result = ArticleDAL.getAllArticles(getApplicationContext());
+        str += "All articles: " + DisplayUtils.arrayToString(result);
+
+        ArticleDAL.deleteArticleById(getApplicationContext(), 2);
+        Article resultArticle = ArticleDAL.getArticleById(getApplicationContext(), 3);
+        str += "Article: " + resultArticle;
+
+        textView.setText(str);
 
     }
 

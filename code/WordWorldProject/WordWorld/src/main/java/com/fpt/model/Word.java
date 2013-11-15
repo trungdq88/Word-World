@@ -11,6 +11,24 @@ public class Word {
     public int status;
     public int created;
 
+    public Word(int id, int word_id, String the_word, String description, int status, int created) {
+        this.id = id;
+        this.word_id = word_id;
+        this.the_word = the_word;
+        this.description = description;
+        this.status = status;
+        this.created = created;
+    }
+
+    public Word(int word_id, String the_word, String description, int status, int created) {
+        this.id = id;
+        this.word_id = word_id;
+        this.the_word = the_word;
+        this.description = description;
+        this.status = status;
+        this.created = created;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
