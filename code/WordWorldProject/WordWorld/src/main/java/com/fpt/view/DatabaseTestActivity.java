@@ -13,7 +13,9 @@ import android.os.Build;
 import android.widget.TextView;
 
 import com.fpt.model.Article;
+import com.fpt.model.Word;
 import com.fpt.model.dal.ArticleDAL;
+import com.fpt.model.dal.WordDAL;
 import com.fpt.provider.WWDBContract;
 import com.fpt.provider.WWDatabase;
 import com.fpt.util.DisplayUtils;
@@ -40,15 +42,29 @@ public class DatabaseTestActivity extends ActionBarActivity {
         TextView textView = (TextView) findViewById(R.id.textView);
         String str = "";
 
-        Article a = new Article(2, "http://google.com", "hello mot hai ba", (new Date()).getTime());
-        ArticleDAL.insertArticle(getApplicationContext(), a);
-        List<Article> result = ArticleDAL.getAllArticles(getApplicationContext());
-        str += "All articles: " + DisplayUtils.arrayToString(result);
+//        Article a = new Article(2, "http://google.com", "hello mot hai ba", (new Date()).getTime());
+//        ArticleDAL.insertArticle(getApplicationContext(), a);
+//        List<Article> result = ArticleDAL.getAllArticles(getApplicationContext());
+//        str += "All articles: " + DisplayUtils.arrayToString(result);
+//
+//        ArticleDAL.deleteArticleById(getApplicationContext(), 2);
+//        Article resultArticle = ArticleDAL.getArticleById(getApplicationContext(), 3);
+//        str += "Article: " + resultArticle;
 
-        ArticleDAL.deleteArticleById(getApplicationContext(), 2);
-        Article resultArticle = ArticleDAL.getArticleById(getApplicationContext(), 3);
-        str += "Article: " + resultArticle;
+//        List<Word> words = WordDAL.getAllWords(getApplicationContext());
+//        str += "words: " + DisplayUtils.arrayToString(words);
+//
+//        Word w = new Word(1, "the", "the the", 1, (new Date()).getTime());
+//        WordDAL.insertWord(getApplicationContext(), w);
+//
+//        List<Word> result = WordDAL.getAllWords(getApplicationContext());
+//        str += ">> words: " + DisplayUtils.arrayToString(result);
 
+        Word w = WordDAL.getWordById(getApplicationContext(), 1);
+        str += " ++ words: " + w;
+        WordDAL.deleteWordById(getApplicationContext(), 1);
+        Word w2 = WordDAL.getWordById(getApplicationContext(), 1);
+        str += " -- words: " + w2;
         textView.setText(str);
 
     }

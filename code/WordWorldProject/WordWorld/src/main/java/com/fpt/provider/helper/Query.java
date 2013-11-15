@@ -39,5 +39,13 @@ public class Query {
                 // Add this temporary column for debug purpose
                 // logcat will print out query and we can easily trace it.
         };
+        String[] WORD_PROJECTION = {
+                BaseColumns._ID,
+                Word.WORD_ID,
+                Word.THE_WORD,
+                Word.DESCRIPTION,
+                Word.STATUS,
+                Word.CREATED
+        };
     }
 }
