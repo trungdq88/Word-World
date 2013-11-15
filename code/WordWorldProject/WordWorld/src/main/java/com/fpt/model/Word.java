@@ -9,9 +9,9 @@ public class Word {
     public String the_word;
     public String description;
     public int status;
-    public int created;
+    public long created;
 
-    public Word(int id, int word_id, String the_word, String description, int status, int created) {
+    public Word(int id, int word_id, String the_word, String description, int status, long created) {
         this.id = id;
         this.word_id = word_id;
         this.the_word = the_word;
@@ -20,7 +20,7 @@ public class Word {
         this.created = created;
     }
 
-    public Word(int word_id, String the_word, String description, int status, int created) {
+    public Word(int word_id, String the_word, String description, int status, long created) {
         this.id = id;
         this.word_id = word_id;
         this.the_word = the_word;
@@ -52,7 +52,6 @@ public class Word {
         result = 31 * result + the_word.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + status;
-        result = 31 * result + created;
         return result;
     }
 
