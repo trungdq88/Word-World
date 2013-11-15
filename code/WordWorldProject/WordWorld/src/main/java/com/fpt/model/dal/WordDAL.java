@@ -62,6 +62,37 @@ public class WordDAL {
         return words;
     }
 
+    /**
+     * Get all word with specific status.
+     * @param context
+     * @param status
+     * @return
+     */
+    public static List<Word> getAllWordsWithStatus(Context context, int status) {
+        LOGD(TAG, "Get All Words With Status");
+        WWDatabase ww = new WWDatabase(context);
+        Cursor c = ww.getWritableDatabase().query(WWDBContract.Tables.WORD,
+                Query.Projections.WORD_PROJECTION,
+                WWDBContract.Word.STATUS + "=?",
+                new String[]{String.valueOf(status)},
+                null, null, null);
+
+        List<Word> words = new ArrayList<Word>();
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex(WWDBContract.Word._ID));
+            String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
+            String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
+            int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
+            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
+        }
+        if (c != null) {
+            c.close();
+        }
+        return words;
+    }
+
 
     /**
      * Get all words, include status 1 and status 0 words. LIMIT offset, length (use for pagination)
@@ -98,6 +129,43 @@ public class WordDAL {
         return words;
     }
 
+    /**
+     * Get all word with specific status, with LIMIT
+     * @param context
+     * @param status
+     * @param offset
+     * @param length
+     * @return
+     */
+    public static List<Word> getAllWordsWithStatus(Context context, int status, int offset, int length) {
+        LOGD(TAG, "get All Words With Status");
+        WWDatabase ww = new WWDatabase(context);
+        Cursor c = ww.getWritableDatabase().query(WWDBContract.Tables.WORD,
+                Query.Projections.WORD_PROJECTION,
+                WWDBContract.Word.STATUS + "=?",
+                new String[]{String.valueOf(status)},
+                null,
+                null,
+                null,
+                " " + offset + ", " + length);
+
+        List<Word> words = new ArrayList<Word>();
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex(WWDBContract.Word._ID));
+            String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
+            String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
+            int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
+            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
+        }
+        if (c != null) {
+            c.close();
+        }
+        return words;
+    }
+
+
     public static Word getWordById(Context context, int id) {
         LOGD(TAG, "Get Word By Id");
         WWDatabase db = new WWDatabase(context);
@@ -121,6 +189,61 @@ public class WordDAL {
             c.close();
         }
         return null;
+    }
+
+    public static Word getWordByText(Context context, String text) {
+        LOGD(TAG, "get Word By Text");
+        WWDatabase db = new WWDatabase(context);
+        Cursor c = db.getWritableDatabase().query(WWDBContract.Tables.WORD,
+                Query.Projections.WORD_PROJECTION,
+                WWDBContract.Word.THE_WORD + "=?", // Selection strings
+                new String[]{text}, // Select args
+                null, // groyp by
+                null, // having
+                null); // orderby
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex(WWDBContract.Word._ID));
+            String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
+            String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
+            int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
+            return (new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
+        }
+        if (c != null) {
+            c.close();
+        }
+        return null;
+    }
+
+    public static boolean updateWordStatus(Context context, int id, int status) {
+        LOGD(TAG, "update Word Status");
+        WWDatabase db = new WWDatabase(context);
+
+        ContentValues cv = new ContentValues();
+        cv.put(WWDBContract.Word.STATUS, status);
+
+        int result = db.getWritableDatabase().update(WWDBContract.Tables.WORD,
+                cv,
+                WWDBContract.Word._ID + "=?",
+                new String[]{String.valueOf(id)});
+
+        return result > 0;
+    }
+
+    public static boolean updateWordDescription(Context context, int id, String description) {
+        LOGD(TAG, "update Word Description");
+        WWDatabase db = new WWDatabase(context);
+
+        ContentValues cv = new ContentValues();
+        cv.put(WWDBContract.Word.DESCRIPTION, description);
+
+        int result = db.getWritableDatabase().update(WWDBContract.Tables.WORD,
+                cv,
+                WWDBContract.Word._ID + "=?",
+                new String[]{String.valueOf(id)});
+
+        return result > 0;
     }
 
     public static boolean deleteWordById(Context context, int id) {
