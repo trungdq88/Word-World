@@ -92,7 +92,7 @@ public class StringBuilderHelper {
             String word = "";
             while ((beginSpaceIndex <= endSpaceIndex) && (endSpaceIndex >= 0)) {
                 word = contentHTML.substring(beginSpaceIndex, endSpaceIndex);
-                if (isRealWord(word)) {
+                if (isRealWord(word) && word.length()>2) {
                     if (!list.contains(word)) {
                         list.add(word);
                         //System.out.println(word);
@@ -124,7 +124,6 @@ public class StringBuilderHelper {
 
     /**
      * this method will add tag to all word in contentHTML which is occur in listWord.
-     * @param contentHTML
      * @param listWord
      * @param beginTag
      * @param endTag

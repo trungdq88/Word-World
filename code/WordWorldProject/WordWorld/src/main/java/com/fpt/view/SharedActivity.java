@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.fpt.provider.WWDatabase;
 import com.fpt.view.fragment.WebviewFragment;
 
 public class SharedActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
@@ -27,6 +28,9 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shared);
+
+        // Delete database
+//        WWDatabase.deleteDatabase(getApplicationContext());
 
         // Set up the action bar to show a dropdown list.
         final ActionBar actionBar = getSupportActionBar();
