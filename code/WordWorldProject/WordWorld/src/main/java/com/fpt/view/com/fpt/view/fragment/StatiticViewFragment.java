@@ -11,7 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.TextView;
 
+import com.fpt.model.Article;
+import com.fpt.model.dal.ArticleDAL;
+import com.fpt.model.dal.WordDAL;
 import com.fpt.view.MainActivity;
 import com.fpt.view.R;
 
@@ -48,6 +52,14 @@ public class StatiticViewFragment extends Fragment {
         // Busniess code here
 //        TextView textView = (TextView) rootView.findViewById(R.id.textView);
 //        textView.setText("TEST");
+
+        // Update general statitics:
+        TextView txtTotalWord = (TextView) rootView.findViewById(R.id.txtTotalWord);
+        txtTotalWord.setText(getString(R.string.string_total_word) + ": " + WordDAL.getAllWords(activity.getApplicationContext()).size() + " từ");
+
+        TextView txtTotalArticle = (TextView) rootView.findViewById(R.id.txtTotalArticle);
+        txtTotalArticle.setText(getString(R.string.total_article_string) + ": " + ArticleDAL.getAllArticles(activity.getApplicationContext()).size() + " bài");
+
 
         return rootView;
     }
