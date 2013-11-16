@@ -17,24 +17,24 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="com.fpt.view.SearchActivity" />
         <activity
             android:name="com.fpt.view.MainActivity"
             android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.fpt.view.SharedActivity"
             android:label="@string/title_activity_shared" >
             <intent-filter android:label="Share link to dictionary" >
                 <action android:name="android.intent.action.SEND" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:mimeType="text/plain" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -56,8 +56,18 @@
             android:label="@string/title_activity_remove_word_popup" >
         </activity>
         <activity
-            android:name="com.fpt.view.AllArticleFragment"
-            android:label="@string/title_activity_all_article_fragment" >
+            android:name="com.fpt.view.SearchActivity"
+            android:launchMode="singleTop"
+            android:label="@string/title_activity_search" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
     </application>
 
