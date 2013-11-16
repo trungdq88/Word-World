@@ -342,4 +342,8 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
     private void callJsWrap(String unique_seq) {
         webView.loadUrl("javascript:wrap_word('"+unique_seq+"')");
     }
+
+    private void callJsHighlightOn() {
+        webView.loadUrl("javascript:highlight_on()");
+    }
 }
