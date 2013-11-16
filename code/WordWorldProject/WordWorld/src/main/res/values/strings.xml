@@ -23,6 +23,13 @@
         <item>Save Article</item>
     </array>
 
+
+    <array name="search_option">
+        <item>Thu tu tu dien</item>
+        <item>So lan gap</item>
+        <item>Recent</item>
+    </array>
+
     <string name="title_activity_all_vocabulary_fragment">All Vocabulary</string>
     <string name="title_activity_dialog_fragment">DialogFragment</string>
 

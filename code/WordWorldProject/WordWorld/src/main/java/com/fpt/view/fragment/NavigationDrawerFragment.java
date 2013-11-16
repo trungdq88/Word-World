@@ -206,6 +206,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
+
         switch (position) {
             case 0: {
                 Fragment wordViewFragment = new WordViewFragment();
