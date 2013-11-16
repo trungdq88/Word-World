@@ -28,10 +28,31 @@ public class WordDAL {
         cv.put(WWDBContract.Word.THE_WORD, word.the_word);
         cv.put(WWDBContract.Word.DESCRIPTION, word.description);
         cv.put(WWDBContract.Word.STATUS, word.status);
+        cv.put(WWDBContract.Word.COUNT, word.count);
         cv.put(WWDBContract.Word.CREATED, word.created);
 
         WWDatabase db = new WWDatabase(context);
         return db.getWritableDatabase().insert(WWDBContract.Tables.WORD, "", cv) > 0;
+    }
+
+    public static boolean updateSeenCount(Context context, int id) {
+        LOGD(TAG, "update count for " + id);
+
+        WWDatabase db = new WWDatabase(context);
+        ContentValues cv = new ContentValues();
+
+//        cv.put(WWDBContract.Word.COUNT, WWDBContract.Word.COUNT + " + 1");
+//
+//        int result = db.getWritableDatabase().update(WWDBContract.Tables.WORD,
+//                cv,
+//                WWDBContract.Word._ID + "=?",
+//                new String[]{String.valueOf(id)});
+
+        db.getWritableDatabase().execSQL("UPDATE " + WWDBContract.Tables.WORD
+                + " SET " + WWDBContract.Word.COUNT + " = " + WWDBContract.Word.COUNT + " + 1 "
+                + "WHERE " + WWDBContract.Word._ID + " = " + id);
+
+        return true;
     }
 
     /**
@@ -53,8 +74,9 @@ public class WordDAL {
             String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
             String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
             int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            int wordCount = c.getInt(c.getColumnIndex(WWDBContract.Word.COUNT));
             long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
-            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
+            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCount, wordCreated));
         }
         if (c != null) {
             c.close();
@@ -84,8 +106,9 @@ public class WordDAL {
             String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
             String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
             int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            int wordCount = c.getInt(c.getColumnIndex(WWDBContract.Word.COUNT));
             long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
-            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
+            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCount, wordCreated));
         }
         if (c != null) {
             c.close();
@@ -120,8 +143,9 @@ public class WordDAL {
             String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
             String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
             int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            int wordCount = c.getInt(c.getColumnIndex(WWDBContract.Word.COUNT));
             long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
-            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
+            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCount, wordCreated));
         }
         if (c != null) {
             c.close();
@@ -156,8 +180,9 @@ public class WordDAL {
             String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
             String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
             int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            int wordCount = c.getInt(c.getColumnIndex(WWDBContract.Word.COUNT));
             long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
-            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
+            words.add(new Word(_id, wordTheWord, wordDescription, wordStatus, wordCount, wordCreated));
         }
         if (c != null) {
             c.close();
@@ -182,8 +207,9 @@ public class WordDAL {
             String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
             String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
             int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            int wordCount = c.getInt(c.getColumnIndex(WWDBContract.Word.COUNT));
             long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
-            return (new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
+            return (new Word(_id, wordTheWord, wordDescription, wordStatus, wordCount, wordCreated));
         }
         if (c != null) {
             c.close();
@@ -207,8 +233,9 @@ public class WordDAL {
             String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
             String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
             int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            int wordCount = c.getInt(c.getColumnIndex(WWDBContract.Word.COUNT));
             long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
-            return (new Word(_id, wordTheWord, wordDescription, wordStatus, wordCreated));
+            return (new Word(_id, wordTheWord, wordDescription, wordStatus, wordCount, wordCreated));
         }
         if (c != null) {
             c.close();

@@ -57,10 +57,10 @@ public class DatabaseTestActivity extends ActionBarActivity {
 //        str += "All articles: " + DisplayUtils.arrayToString(result1);
 
 
-        Word w1 = new Word("the", "the the", 1, (new Date()).getTime());
-        Word w2 = new Word("the2", "the the2", 0, (new Date()).getTime());
-        Word w3 = new Word("the3", "the the3", 1, (new Date()).getTime());
-        Word w4 = new Word("the4", "the the4", 1, (new Date()).getTime());
+        Word w1 = new Word("the", "the the", 1, 0, (new Date()).getTime());
+        Word w2 = new Word("the2", "the the2", 0, 0, (new Date()).getTime());
+        Word w3 = new Word("the3", "the the3", 1, 0, (new Date()).getTime());
+        Word w4 = new Word("the4", "the the4", 1, 0, (new Date()).getTime());
         WordDAL.insertWord(getApplicationContext(), w1);
         WordDAL.insertWord(getApplicationContext(), w2);
         WordDAL.insertWord(getApplicationContext(), w3);
@@ -73,20 +73,24 @@ public class DatabaseTestActivity extends ActionBarActivity {
 //
 //        Word w = WordDAL.getWordById(getApplicationContext(), 2);
 //        str += " word by id: " + w;
-
+//
 //        List<Word> result2 = WordDAL.getAllWordsWithStatus(getApplicationContext(), 1);
 //        str += "status1: " + DisplayUtils.arrayToString(result2);
 //
 //        List<Word> result3 = WordDAL.getAllWordsWithStatus(getApplicationContext(), 1, 1, 2);
 //        str += "result3: " + DisplayUtils.arrayToString(result3);
+//
+        Word wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
+        str += " word by text: " + wResult + "\n";
 
-//        Word wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
-//        str += " word by text: " + wResult;
-//
-//        WordDAL.updateWordDescription(getApplicationContext(), 2, "haha");
-//
-//        wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
-//        str += " word by text after update status: " + wResult;
+        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
+        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
+        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
+
+        wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
+        str += " word by text after update status: " + wResult;
+
+
 
         textView.setText(str);
 

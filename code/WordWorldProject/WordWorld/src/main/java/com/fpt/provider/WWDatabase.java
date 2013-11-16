@@ -80,6 +80,7 @@ public class WWDatabase extends SQLiteOpenHelper {
                 + WordColumns.THE_WORD + " TEXT NOT NULL,"
                 + WordColumns.DESCRIPTION + " TEXT,"
                 + WordColumns.STATUS + " INTEGER NOT NULL,"
+                + WordColumns.COUNT + " INTEGER NOT NULL DEFAULT 0,"
                 + WordColumns.CREATED + " INTEGER NOT NULL,"
                 + "UNIQUE (" + BaseColumns._ID + ") ON CONFLICT REPLACE)");
 

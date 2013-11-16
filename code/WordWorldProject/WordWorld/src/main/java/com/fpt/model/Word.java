@@ -8,19 +8,22 @@ public class Word {
     public String the_word;
     public String description;
     public int status;
+    public int count;
     public long created;
 
-    public Word(int id, String the_word, String description, int status, long created) {
+    public Word(int id, String the_word, String description, int status, int count, long created) {
         this.id = id;
         this.the_word = the_word;
         this.description = description;
         this.status = status;
+        this.count = count;
         this.created = created;
     }
-    public Word(String the_word, String description, int status, long created) {
+    public Word(String the_word, String description, int status, int count, long created) {
         this.the_word = the_word;
         this.description = description;
         this.status = status;
+        this.count = count;
         this.created = created;
     }
 
@@ -31,6 +34,7 @@ public class Word {
 
         Word word = (Word) o;
 
+        if (count != word.count) return false;
         if (created != word.created) return false;
         if (id != word.id) return false;
         if (status != word.status) return false;
@@ -47,6 +51,7 @@ public class Word {
         result = 31 * result + the_word.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + status;
+        result = 31 * result + count;
         result = 31 * result + (int) (created ^ (created >>> 32));
         return result;
     }
@@ -58,6 +63,7 @@ public class Word {
                 ", the_word='" + the_word + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                ", count=" + count +
                 ", created=" + created +
                 '}';
     }
