@@ -11,9 +11,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.fpt.helper.adapter.AllVocabularyAdapter;
-import com.fpt.model.Word;
-import com.fpt.model.dal.WordDAL;
+import com.fpt.helper.adapter.AllArticleAdapter;
+import com.fpt.model.Article;
+import com.fpt.model.dal.ArticleDAL;
 import com.fpt.util.SortUtils;
 import com.fpt.view.MainActivity;
 import com.fpt.view.R;
@@ -22,10 +22,9 @@ import java.util.List;
 
 import static com.fpt.util.LogUtils.makeLogTag;
 
-public class AllVocabularyFragment extends Fragment implements AdapterView.OnItemSelectedListener{
+public class AllArticleFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
-    public static String TAG = makeLogTag(AllVocabularyFragment.class);
-
+    public static String TAG = makeLogTag(AllArticleFragment.class);
 
     /** Main Activity for reference */
     MainActivity activity;
@@ -40,14 +39,13 @@ public class AllVocabularyFragment extends Fragment implements AdapterView.OnIte
     ListView mListView;
 
     /** adapter for word listview */
-    AllVocabularyAdapter adapter;
+    AllArticleAdapter adapter;
 
     /** list all articles currently in database */
-    List<Word> words;
+    List<Article> articles;
 
-   public AllVocabularyFragment() {
-
-   }
+    public AllArticleFragment() {
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -70,7 +68,7 @@ public class AllVocabularyFragment extends Fragment implements AdapterView.OnIte
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> searchChoices = ArrayAdapter.
                 createFromResource(getActivity().getApplicationContext(),
-                        R.array.search_option, android.R.layout.simple_spinner_item);
+                        R.array.search_article_option, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         searchChoices.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(searchChoices);    // Apply the adapter to the spinner
@@ -78,8 +76,8 @@ public class AllVocabularyFragment extends Fragment implements AdapterView.OnIte
 
         // ListView Configure
         mListView = (ListView) rootView.findViewById(R.id.listview);
-        words = WordDAL.getAllWords(getActivity().getApplicationContext());
-        adapter = new AllVocabularyAdapter(getActivity().getApplicationContext(), words);
+        articles = ArticleDAL.getAllArticles(getActivity().getApplicationContext());
+        adapter = new AllArticleAdapter(getActivity().getApplicationContext(), articles);
         mListView.setAdapter(adapter);
 
         return rootView;
@@ -90,13 +88,10 @@ public class AllVocabularyFragment extends Fragment implements AdapterView.OnIte
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch(i) {
             case 0 :
-                SortUtils.sortWordByABC(words);
+                SortUtils.sortArticleByABC(articles);
                 break;
             case 1:
-                SortUtils.sortWordByTimes(words);
-                break;
-            case 2:
-                SortUtils.sortWordByRecentTime(words);
+                SortUtils.sortArticleByRecentTime(articles);
                 break;
         }
         // notify to adapter
@@ -108,4 +103,5 @@ public class AllVocabularyFragment extends Fragment implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
 }

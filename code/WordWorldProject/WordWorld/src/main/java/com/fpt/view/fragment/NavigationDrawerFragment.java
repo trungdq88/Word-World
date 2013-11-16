@@ -210,10 +210,10 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
         switch (position) {
             case 0: {
-                Fragment statiticViewFragment = new StatiticViewFragment();
+                Fragment fragment = new AllArticleFragment();
                 Bundle arguments = new Bundle();
-                statiticViewFragment.setArguments(arguments);
-                mCallbacks.onNavigationDrawerItemSelected(statiticViewFragment);
+                fragment.setArguments(arguments);
+                mCallbacks.onNavigationDrawerItemSelected(fragment);
                 break;
             }
             case 1: {
