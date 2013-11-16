@@ -72,8 +72,8 @@ public class AllVocabularyFragment extends Fragment implements AdapterView.OnIte
 
         /** ListView Configure */
         mListView = (ListView) rootView.findViewById(R.id.listview);
-        adapter = new FindByChordAdapter(getActivity().getApplicationContext(), this, chords);
-        mListView.setAdapter(adapter);
+        // adapter = new FindByChordAdapter(getActivity().getApplicationContext(), this, chords);
+        // mListView.setAdapter(adapter);
 
 
 
