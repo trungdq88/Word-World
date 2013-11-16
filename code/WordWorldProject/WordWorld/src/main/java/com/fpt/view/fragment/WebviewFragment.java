@@ -205,6 +205,9 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
             }
         }
 
+        // TODO: insert article
+
+
         // Get all word in database with status 1 ("remembered")
         List<Word> rememberedWords = WordDAL.getAllWordsWithStatus(activity.getApplicationContext(), 1);
 
