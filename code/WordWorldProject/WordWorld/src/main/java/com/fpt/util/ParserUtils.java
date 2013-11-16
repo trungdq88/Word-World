@@ -5,7 +5,6 @@ import android.util.Log;
 import com.fpt.config.Config;
 import com.fpt.model.Article;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
