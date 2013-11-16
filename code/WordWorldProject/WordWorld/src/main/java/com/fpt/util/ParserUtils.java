@@ -2,6 +2,7 @@ package com.fpt.util;
 
 import android.util.Log;
 
+import com.fpt.config.Config;
 import com.fpt.model.Article;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -54,16 +55,27 @@ public class ParserUtils {
     }
 
     /**
+     * make a request url from article url
+     * @param articleUrl
+     * @return
+     */
+    private static String makeUrl(String articleUrl){
+       String url = "https://www.readability.com/api/content/v1/parser?url=" + articleUrl + "&token=" + Config.READABILITY_API_TOKEN;
+        return url;
+    }
+
+    /**
      * get Json string by a url
      *
-     * @param url
+     * @param articleUrl
      * @return Json
      * @throws IOException
      */
-    public static String getJsonString(String url) throws IOException {
+    public static String getJsonString(String articleUrl) throws IOException {
         InputStream is = null;
         // Only display the first 500 characters of the retrieved
         // web page content.
+        String url = makeUrl(articleUrl);
         try {
             // Starts the query
             HttpURLConnection conn = NetworkUtils.getConnection(url);
@@ -85,7 +97,8 @@ public class ParserUtils {
         }
     }
 
-    public static Article getAricle(String jsonString) {
+    public static Article getAricle(String articleUrl)throws IOException{
+        String jsonString = getJsonString(articleUrl);
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
         String url = jsonObject.get("url").getAsString();
