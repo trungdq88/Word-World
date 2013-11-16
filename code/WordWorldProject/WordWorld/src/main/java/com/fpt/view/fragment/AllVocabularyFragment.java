@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import com.fpt.view.R;
+
 public class AllVocabularyFragment extends ActionBarActivity {
 
     @Override
