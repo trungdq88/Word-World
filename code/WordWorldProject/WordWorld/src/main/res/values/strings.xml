@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Word World</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="app_name">Từ vựng của tôi</string>
+    <string name="title_section1">Thống kê</string>
+    <string name="title_section2">Từ vựng của tôi</string>
+    <string name="title_section3">Từ vựng đã gặp</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -25,12 +25,15 @@
 
 
     <array name="search_option">
-        <item>Thu tu tu dien</item>
-        <item>So lan gap</item>
-        <item>Recent</item>
+        <item>Thứ tự ABC</item>
+        <item>Số lần gặp</item>
+        <item>Gần đây</item>
     </array>
 
     <string name="title_activity_all_vocabulary_fragment">All Vocabulary</string>
     <string name="title_activity_dialog_fragment">DialogFragment</string>
+    <string name="title_activity_statitic_view_fragment">MainActivity</string>
+    <string name="string_total_word">Từ vựng của bạn</string>
+    <string name="total_article_string">Số bài đọc đã lưu</string>
 
 </resources>

@@ -48,20 +48,12 @@
             android:label="@string/title_activity_database_test" >
         </activity>
         <activity
-            android:name="com.fpt.view.AddWordPopup"
+            android:name="com.fpt.view.popup.AddWordPopup"
             android:label="@string/title_activity_add_word_popup" >
         </activity>
         <activity
-            android:name="com.fpt.view.RemoveWordPopup"
+            android:name="com.fpt.view.popup.RemoveWordPopup"
             android:label="@string/title_activity_remove_word_popup" >
-        </activity>
-        <activity
-            android:name="com.fpt.view.AllVocabularyFragment"
-            android:label="@string/title_activity_all_vocabulary_fragment" >
-        </activity>
-        <activity
-            android:name="com.fpt.view.DialogFragment"
-            android:label="@string/title_activity_dialog_fragment" >
         </activity>
     </application>
 
