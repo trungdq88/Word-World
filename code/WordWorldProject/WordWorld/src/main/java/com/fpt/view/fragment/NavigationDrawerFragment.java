@@ -33,7 +33,7 @@ import com.fpt.view.com.fpt.view.fragment.WordViewFragment;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment implements NavigationDrawerAdapter.IItemDelegate {
+public class NavigationDrawerFragment extends Fragment {
 
     /**
      * Remember the position of the selected item.
@@ -295,11 +295,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
 
     private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
-    }
-
-    @Override
-    public void gotoCategoryPage(NavigationDrawerAdapter.ItemAdapter.TYPE type) {
-        
     }
 
     /**
