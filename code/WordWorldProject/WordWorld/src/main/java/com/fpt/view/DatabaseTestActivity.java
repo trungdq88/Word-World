@@ -19,6 +19,7 @@ import com.fpt.model.dal.WordDAL;
 import com.fpt.provider.WWDBContract;
 import com.fpt.provider.WWDatabase;
 import com.fpt.util.DisplayUtils;
+import com.fpt.util.ParserUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -80,17 +81,17 @@ public class DatabaseTestActivity extends ActionBarActivity {
 //        List<Word> result3 = WordDAL.getAllWordsWithStatus(getApplicationContext(), 1, 1, 2);
 //        str += "result3: " + DisplayUtils.arrayToString(result3);
 //
-        Word wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
-        str += " word by text: " + wResult + "\n";
+//        Word wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
+//        str += " word by text: " + wResult + "\n";
+//
+//        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
+//        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
+//        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
+//
+//        wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
+//        str += " word by text after update status: " + wResult;
 
-        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
-        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
-        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
-
-        wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
-        str += " word by text after update status: " + wResult;
-
-
+        ParserUtils.getAricle("http://sohoa.vnexpress.net/tin-tuc/doi-song-so/fujifilm-se-ngung-san-xuat-phim-den-trang-3-x-4-lay-ngay-2911170.html");
 
         textView.setText(str);
 
