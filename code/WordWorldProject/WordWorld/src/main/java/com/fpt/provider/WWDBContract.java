@@ -17,18 +17,18 @@ public class WWDBContract {
     }
 
     interface ArticleColumns {
-        String ARTICLE_ID = "article_id";
         String URL = "article_url";
+        String TITLE = "article_title";
         String CONTENT = "article_content";
         String CREATED = "article_created";
     }
 
     interface WordColumns {
-        String WORD_ID = "word_id";
         String THE_WORD = "word_word";
         String DESCRIPTION = "word_description";
         String STATUS = "word_status"; // 0: not in my dict, 1: in my dict.
         String CREATED = "word_created";
+        String COUNT = "word_count";
     }
 
 
@@ -43,6 +43,7 @@ public class WWDBContract {
     public static final class Article implements ArticleColumns, BaseColumns {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_ARTICLE).build();
+
     }
 
     /**

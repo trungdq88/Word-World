@@ -37,34 +37,61 @@ public class DatabaseTestActivity extends ActionBarActivity {
         }
 
         // delete database
-        //WWDatabase.deleteDatabase(getApplicationContext());
+        WWDatabase.deleteDatabase(getApplicationContext());
 
         TextView textView = (TextView) findViewById(R.id.textView);
         String str = "";
 
-//        Article a = new Article(2, "http://google.com", "hello mot hai ba", (new Date()).getTime());
+//        Article a = new Article("http://google.com", "title1", "hello mot hai ba", (new Date()).getTime());
+//        Article a2 = new Article("http://google2.com", "title2", "hello 2 mot hai ba", (new Date()).getTime());
+//        Article a3 = new Article("http://google3.com", "title2", "hello 3 mot hai ba", (new Date()).getTime());
 //        ArticleDAL.insertArticle(getApplicationContext(), a);
-//        List<Article> result = ArticleDAL.getAllArticles(getApplicationContext());
-//        str += "All articles: " + DisplayUtils.arrayToString(result);
+//        ArticleDAL.insertArticle(getApplicationContext(), a2);
+//        ArticleDAL.insertArticle(getApplicationContext(), a3);
 //
 //        ArticleDAL.deleteArticleById(getApplicationContext(), 2);
 //        Article resultArticle = ArticleDAL.getArticleById(getApplicationContext(), 3);
 //        str += "Article: " + resultArticle;
-
-//        List<Word> words = WordDAL.getAllWords(getApplicationContext());
-//        str += "words: " + DisplayUtils.arrayToString(words);
 //
-//        Word w = new Word(1, "the", "the the", 1, (new Date()).getTime());
-//        WordDAL.insertWord(getApplicationContext(), w);
-//
-//        List<Word> result = WordDAL.getAllWords(getApplicationContext());
-//        str += ">> words: " + DisplayUtils.arrayToString(result);
+//        List<Article> result1 = ArticleDAL.getAllArticles(getApplicationContext());
+//        str += "All articles: " + DisplayUtils.arrayToString(result1);
 
-        Word w = WordDAL.getWordById(getApplicationContext(), 1);
-        str += " ++ words: " + w;
-        WordDAL.deleteWordById(getApplicationContext(), 1);
-        Word w2 = WordDAL.getWordById(getApplicationContext(), 1);
-        str += " -- words: " + w2;
+
+        Word w1 = new Word("the", "the the", 1, 0, (new Date()).getTime());
+        Word w2 = new Word("the2", "the the2", 0, 0, (new Date()).getTime());
+        Word w3 = new Word("the3", "the the3", 1, 0, (new Date()).getTime());
+        Word w4 = new Word("the4", "the the4", 1, 0, (new Date()).getTime());
+        WordDAL.insertWord(getApplicationContext(), w1);
+        WordDAL.insertWord(getApplicationContext(), w2);
+        WordDAL.insertWord(getApplicationContext(), w3);
+        WordDAL.insertWord(getApplicationContext(), w4);
+//
+//        List<Word> result = WordDAL.getAllWords(getApplicationContext(), 1, 2);
+//
+//        str += "wordss: " + DisplayUtils.arrayToString(result);
+//
+//
+//        Word w = WordDAL.getWordById(getApplicationContext(), 2);
+//        str += " word by id: " + w;
+//
+//        List<Word> result2 = WordDAL.getAllWordsWithStatus(getApplicationContext(), 1);
+//        str += "status1: " + DisplayUtils.arrayToString(result2);
+//
+//        List<Word> result3 = WordDAL.getAllWordsWithStatus(getApplicationContext(), 1, 1, 2);
+//        str += "result3: " + DisplayUtils.arrayToString(result3);
+//
+        Word wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
+        str += " word by text: " + wResult + "\n";
+
+        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
+        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
+        WordDAL.updateSeenCount(getApplicationContext(), wResult.id);
+
+        wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
+        str += " word by text after update status: " + wResult;
+
+
+
         textView.setText(str);
 
     }

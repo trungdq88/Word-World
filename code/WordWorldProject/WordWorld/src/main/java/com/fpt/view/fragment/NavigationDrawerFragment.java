@@ -101,7 +101,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.title_section1),
+                        "Dinh Quang Trung",
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
                 }));
@@ -188,15 +188,35 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
     }
 
     private void selectItem(int position) {
-        mCurrentSelectedPosition = position;
+//        mCurrentSelectedPosition = position;
+//        if (mDrawerListView != null) {
+//            mDrawerListView.setItemChecked(position, true);
+//        }
+//        if (mDrawerLayout != null) {
+//            mDrawerLayout.closeDrawer(mFragmentContainerView);
+//        }
+//        if (mCallbacks != null) {
+//            mCallbacks.onNavigationDrawerItemSelected(position);
+//        }
         if (mDrawerListView != null) {
             mDrawerListView.setItemChecked(position, true);
         }
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
-        if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
+        switch (position) {
+            case 0: {
+                Fragment wordViewFragment = new WordViewFragment();
+                Bundle arguments = new Bundle();
+                wordViewFragment.setArguments(arguments);
+                mCallbacks.onNavigationDrawerItemSelected(wordViewFragment);
+                break;
+            }
+            case 1: {
+                Fragment articleViewFragment = new ArticleViewFragment();
+                mCallbacks.onNavigationDrawerItemSelected(articleViewFragment);
+                break;
+            }
         }
     }
 
@@ -281,6 +301,6 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position);
+        void onNavigationDrawerItemSelected(Fragment fragment);
     }
 }
