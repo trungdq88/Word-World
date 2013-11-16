@@ -3,7 +3,9 @@ package com.fpt.unittest;
 import android.content.Context;
 
 import com.fpt.model.Article;
+import com.fpt.model.Word;
 import com.fpt.model.dal.ArticleDAL;
+import com.fpt.model.dal.WordDAL;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public class DatabaseTest {
         boolean result = ArticleDAL.insertArticle(context ,article);
 
         if (result){
-            str += "OK";
+            str += "SUCCESSFUL";
         }else {
             str += "FAIL";
         }
@@ -46,7 +48,7 @@ public class DatabaseTest {
         boolean result = article1.equals(article);
 
         if (result) {
-            str += " OK";
+            str += "SUCCESSFUL";
         } else {
             str += "FAIL: result: " + article1 + "| Expected: " + article;
         }
@@ -64,7 +66,7 @@ public class DatabaseTest {
         boolean result = ArticleDAL.deleteArticleById(context, 1);
 
         if(result) {
-            str += "OK";
+            str += "SUCCESSFUL";
         }else {
             str += "FAIL: ";
         }
@@ -89,15 +91,57 @@ public class DatabaseTest {
         List<Article> articleList = ArticleDAL.getAllArticles(context);
 
         //So sanh cac phan tu trong list
-        if(articleList.get(0).equals(article1)){
-            str += "OK";
+        if(articleList.get(0).equals(article1) && articleList.get(1).equals(article2) && articleList.get(2).equals(article3) && articleList.get(3).equals(article4)){
+            str += "SUCCESSFUL";
         }else{
             str += "FAIL: result: " + articleList.get(0).toString() + " | Expected: " + article1;
         }
 
         return str;
-
-
     }
+
+    public static String test_insertWord(Context context){
+        String str = "test_insertWord: ";
+
+        //Tao word
+        Word word = new Word(1, "Hello", "Xin chao", 1, 2, 3);
+
+        //Insert word
+        boolean result = WordDAL.insertWord(context, word);
+
+        if(result){
+            str += "SUCCESSFUL";
+        }else {
+            str += "FAIL";
+        }
+
+        //Delete word
+        WordDAL.deleteWordById(context, 1);
+
+        return str;
+    }
+
+    public static String test_updateSeenCount(Context context){
+        String str = "test_updateSeenCount: ";
+
+        //Insert word
+        Word word = new Word(1, "Hello", "Xin chao", 1, 2, 3);
+        WordDAL.insertWord(context, word);
+
+        //Update count
+        boolean result = WordDAL.updateSeenCount(context, 1);
+
+        if(result){
+            str += "SUCCESSFUL";
+        }else{
+            str += "FAIL";
+        }
+
+        //Delete word
+        WordDAL.deleteWordById(context, 1);
+
+        return  str;
+    }
+
 
 }

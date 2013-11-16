@@ -41,6 +41,10 @@ public class UnitTestActivity extends ActionBarActivity {
         WWDatabase.deleteDatabase(getApplicationContext());
         str += DatabaseTest.test_getAllArticles(getApplicationContext()) + "\n";
         WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_insertWord(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_updateSeenCount(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
         textview.setText(str);
     }
 
