@@ -210,10 +210,9 @@ public class NavigationDrawerFragment extends Fragment {
 
         switch (position) {
             case 0: {
-                Fragment fragment = new AllArticleFragment();
-                Bundle arguments = new Bundle();
-                fragment.setArguments(arguments);
-                mCallbacks.onNavigationDrawerItemSelected(fragment);
+
+                Fragment articleViewFragment = new StatiticViewFragment();
+                mCallbacks.onNavigationDrawerItemSelected(articleViewFragment);
                 break;
             }
             case 1: {
@@ -224,8 +223,10 @@ public class NavigationDrawerFragment extends Fragment {
                 break;
             }
             case 2: {
-                Fragment articleViewFragment = new ArticleViewFragment();
-                mCallbacks.onNavigationDrawerItemSelected(articleViewFragment);
+                Fragment fragment = new AllArticleFragment();
+                Bundle arguments = new Bundle();
+                fragment.setArguments(arguments);
+                mCallbacks.onNavigationDrawerItemSelected(fragment);
                 break;
             }
         }

@@ -55,10 +55,10 @@ public class StatiticViewFragment extends Fragment {
 
         // Update general statitics:
         TextView txtTotalWord = (TextView) rootView.findViewById(R.id.txtTotalWord);
-        txtTotalWord.setText(getString(R.string.string_total_word) + ": " + WordDAL.getAllWords(activity.getApplicationContext()).size() + " từ");
+        txtTotalWord.setText(getString(R.string.string_total_word) + " " + WordDAL.getAllWords(activity.getApplicationContext()).size());
 
         TextView txtTotalArticle = (TextView) rootView.findViewById(R.id.txtTotalArticle);
-        txtTotalArticle.setText(getString(R.string.total_article_string) + ": " + ArticleDAL.getAllArticles(activity.getApplicationContext()).size() + " bài");
+        txtTotalArticle.setText(getString(R.string.total_article_string) + " " + ArticleDAL.getAllArticles(activity.getApplicationContext()).size());
 
 
         return rootView;

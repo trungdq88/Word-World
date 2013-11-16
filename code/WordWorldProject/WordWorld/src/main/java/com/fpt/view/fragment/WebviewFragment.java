@@ -34,6 +34,7 @@ import com.fpt.model.Article;
 import com.fpt.model.ContentGetter;
 import com.fpt.model.JavascriptCallback;
 import com.fpt.model.Word;
+import com.fpt.model.dal.ArticleDAL;
 import com.fpt.model.dal.WordDAL;
 import com.fpt.util.ContentUtils;
 import com.fpt.util.DisplayUtils;
@@ -100,12 +101,13 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         webView.addJavascriptInterface(callback, "AndroidCallback");
 
 
-        /** Load HTML here */
+        // Load from "share to" option
         if (activity.linkWebPage != null && !activity.linkWebPage.isEmpty()) {
             // Step 1
             begin2 = (new Date()).getTime();
             (new ContentGetter(this)).execute(activity.linkWebPage);
         } else {
+            // Load from other activities
             webView.loadDataWithBaseURL("", HQTUtils.generateHTML(), "text/html", "UTF-8", "");
         }
         return rootView;
@@ -269,6 +271,10 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         long end2 = (new Date()).getTime();
         Log.i("TimingDebug", "Internet: " + (end2-begin2)+"");
         // Step 3
+
+        // Add article to database
+        ArticleDAL.insertArticle(activity.getApplicationContext(), article);
+
 
         // Get all word
 
