@@ -25,7 +25,7 @@ public class ParserUtils {
      * @throws IOException
      * @throws UnsupportedEncodingException
      */
-    public String readIt(InputStream stream) throws IOException {
+    public static String convertInputStreamToString(InputStream stream) throws IOException {
 //        Reader reader = null;
 //        reader = new InputStreamReader(stream, "UTF-8");
 //        char[] buffer = new char[len];
@@ -53,7 +53,7 @@ public class ParserUtils {
      * @return Json
      * @throws IOException
      */
-    public String getJsonString(String url) throws IOException {
+    public static String getJsonString(String url) throws IOException {
         InputStream is = null;
         // Only display the first 500 characters of the retrieved
         // web page content.
@@ -66,7 +66,7 @@ public class ParserUtils {
             is = conn.getInputStream();
 
             // Convert the InputStream into a string
-            String contentAsString = readIt(is);
+            String contentAsString = convertInputStreamToString(is);
             return contentAsString;
 
             // Makes sure that the InputStream is closed after the app is
