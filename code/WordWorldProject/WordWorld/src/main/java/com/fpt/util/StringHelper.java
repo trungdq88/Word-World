@@ -80,7 +80,7 @@ public class StringHelper {
                 contentHTML += SPACE;
             }
 
-            // get all words
+            // get all articles
             int beginSpaceIndex = 0;
             int endSpaceIndex = contentHTML.indexOf(SPACE, beginSpaceIndex + 1);
             String word = "";

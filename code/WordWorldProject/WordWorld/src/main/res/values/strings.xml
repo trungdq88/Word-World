@@ -22,12 +22,16 @@
         <item>Statistic</item>
         <item>Save Article</item>
     </array>
-
-
     <array name="search_option">
         <item>ABC Order</item>
         <item>Seen times</item>
         <item>Recent</item>
+    </array>
+
+
+    <array name="search_article_option">
+        <item>Thứ tự ABC</item>
+        <item>Gần đây</item>
     </array>
 
     <string name="title_activity_all_vocabulary_fragment">All Vocabulary</string>
@@ -35,5 +39,6 @@
     <string name="title_activity_statitic_view_fragment">MainActivity</string>
     <string name="string_total_word">Your vocabulary:</string>
     <string name="total_article_string">Saved articles:</string>
+    <string name="title_activity_all_article_fragment">All Articles</string>
 
 </resources>

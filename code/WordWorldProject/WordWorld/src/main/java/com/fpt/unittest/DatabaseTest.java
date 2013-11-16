@@ -260,7 +260,7 @@ public class DatabaseTest {
         WordDAL.insertWord(context, word4);
         WordDAL.insertWord(context, word5);
 
-        //get all words
+        //get all articles
         List<Word> wordList = WordDAL.getAllWords(context);
 
         //so sanh
@@ -276,7 +276,7 @@ public class DatabaseTest {
         String str = "test_getAllWordsWithStatus: ";
 
 
-        //Insert words
+        //Insert articles
         Word word1 = new Word(1, "Hello", "Xin chao", 1, 2, 3);
         Word word2 = new Word(2, "Hi", "Xin chao", 2, 2, 3);
         Word word3 = new Word(3, "Good", "tot", 3, 2, 3);
@@ -288,7 +288,7 @@ public class DatabaseTest {
         WordDAL.insertWord(context, word4);
         WordDAL.insertWord(context, word5);
 
-        //get words with status 5
+        //get articles with status 5
         List<Word> wordList = WordDAL.getAllWordsWithStatus(context, 5);
 
         //so sanh
@@ -304,7 +304,7 @@ public class DatabaseTest {
         String str = "test_getAllWords2: ";
 
 
-        //Insert words
+        //Insert articles
         Word word1 = new Word(1, "Hello", "Xin chao", 1, 2, 3);
         Word word2 = new Word(2, "Hi", "Xin chao", 2, 2, 3);
         Word word3 = new Word(3, "Good", "tot", 3, 2, 3);
@@ -316,7 +316,7 @@ public class DatabaseTest {
         WordDAL.insertWord(context, word4);
         WordDAL.insertWord(context, word5);
 
-        //get words with status 5
+        //get articles with status 5
         List<Word> list = WordDAL.getAllWords(context, 2, 5);
 
         //so sanh
@@ -332,7 +332,7 @@ public class DatabaseTest {
         String str = "test_getAllWordsWithStatus2: ";
 
 
-        //Insert words
+        //Insert articles
         Word word1 = new Word(1, "Hello", "Xin chao", 1, 2, 3);
         Word word2 = new Word(2, "Hi", "Xin chao", 5, 2, 3);
         Word word3 = new Word(3, "Good", "tot", 5, 2, 3);
@@ -344,7 +344,7 @@ public class DatabaseTest {
         WordDAL.insertWord(context, word4);
         WordDAL.insertWord(context, word5);
 
-        //get words with status 5
+        //get articles with status 5
         List<Word> list = WordDAL.getAllWordsWithStatus(context, 5, 1, 5);
 
         //so sanh

@@ -56,7 +56,7 @@ public class WordDAL {
     }
 
     /**
-     * Get all words, include status 1 and status 0 words.
+     * Get all articles, include status 1 and status 0 articles.
      * @param context
      * @return
      */
@@ -118,7 +118,7 @@ public class WordDAL {
 
 
     /**
-     * Get all words, include status 1 and status 0 words. LIMIT offset, length (use for pagination)
+     * Get all articles, include status 1 and status 0 articles. LIMIT offset, length (use for pagination)
      * @param context
      * @param offset
      * @param length
