@@ -34,7 +34,7 @@ public class WebviewFragment extends Fragment  {
     /** using Handler for manipulated UI Thread */
     final Handler myHandler = new Handler();
 
-    PopupWindow popup;
+    PopupWindow pw;
 
     public WebviewFragment() {
 
@@ -99,10 +99,11 @@ public class WebviewFragment extends Fragment  {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pw.dismiss();
             }
         });
 
-        PopupWindow pw = new PopupWindow(
+        pw = new PopupWindow(
                 layout,
                 200,
                 200,

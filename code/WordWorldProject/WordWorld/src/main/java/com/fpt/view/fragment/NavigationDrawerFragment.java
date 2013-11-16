@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.fpt.helper.adapter.NavigationDrawerAdapter;
 import com.fpt.view.R;
+import com.fpt.view.com.fpt.view.fragment.ArticleViewFragment;
+import com.fpt.view.com.fpt.view.fragment.WordViewFragment;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
