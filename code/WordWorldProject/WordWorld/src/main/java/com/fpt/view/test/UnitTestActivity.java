@@ -23,7 +23,7 @@ public class UnitTestActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.unittestactivity_activity);
 
-        if (savedInstanceState == null) {
+            if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
@@ -44,6 +44,24 @@ public class UnitTestActivity extends ActionBarActivity {
         str += DatabaseTest.test_insertWord(getApplicationContext()) + "\n";
         WWDatabase.deleteDatabase(getApplicationContext());
         str += DatabaseTest.test_updateSeenCount(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_updateWordDescription(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_updateWordStatus(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_deleteWordById(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_getWordByText(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_getWordById(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_getAllWords(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_getAllWordsWithStatus(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_getAllWords2(getApplicationContext()) + "\n";
+        WWDatabase.deleteDatabase(getApplicationContext());
+        str += DatabaseTest.test_getAllWordsWithStatus2(getApplicationContext()) + "\n";
         WWDatabase.deleteDatabase(getApplicationContext());
         textview.setText(str);
     }
