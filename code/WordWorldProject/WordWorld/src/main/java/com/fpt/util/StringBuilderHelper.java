@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author Mr Dj Thuk
  */
-public class StringHelper {
+public class StringBuilderHelper {
 
     private static final String TAGBEGIN = "<";
     private static final String TAGEND = ">";
@@ -16,11 +16,11 @@ public class StringHelper {
 
     /**
      * This method will get all real word in the String contain html tag.
-     * @param contentHTML
      * @return all real word in list
      */
-    public static List<String> getListWord(String contentHTML) {
+    public static List<String> getListWord(String content) {
         List<String> list = new ArrayList<String>();
+        StringBuilder contentHTML = new StringBuilder(content);
         try {
             // remove all tags
             int beginTagIndex = -1;
@@ -30,13 +30,15 @@ public class StringHelper {
                 endTagIndex = contentHTML.indexOf(TAGEND);
                 if (beginTagIndex < endTagIndex) {
                     // delete tag
-                    contentHTML = contentHTML.substring(0, beginTagIndex)
-                            + contentHTML.substring(endTagIndex + 1, contentHTML.length());
+                   // contentHTML = contentHTML.substring(0, beginTagIndex)
+                   //         + contentHTML.substring(endTagIndex + 1, contentHTML.length());
+                    contentHTML = contentHTML.delete(beginTagIndex, endTagIndex+1);
+                    //System.out.println(contentHTML);
                 }
             }
 
             // if contentHTML empty then return
-            if (contentHTML.isEmpty()) {
+            if (contentHTML.equals("")) {
                 return list;
             }
 
@@ -46,53 +48,58 @@ public class StringHelper {
             for (i = 0; i < contentHTML.length(); i++) {
                 ch = contentHTML.charAt(i);
                 if (!Character.isLetter(ch) && (ch != '\'')) {
-                    contentHTML = contentHTML.replace(ch, SPACE);
+                    contentHTML = contentHTML.replace(i,i+1, SPACE+"");
                 }
             }
+            
             // if contentHTML empty then return
-            if (contentHTML.isEmpty()) {
+            if (contentHTML.equals("")) {
                 return list;
             }
             // remove all redundant spaces
             int doubleSpaceIndex = contentHTML.indexOf(DOUBLESPACE);
             while (doubleSpaceIndex >= 0) {
-                contentHTML = contentHTML.replaceAll(DOUBLESPACE, SPACE + "");
+                //contentHTML = contentHTML.replaceAll(DOUBLESPACE, SPACE + "");
+                contentHTML = contentHTML.replace(doubleSpaceIndex, doubleSpaceIndex+2, SPACE+"");
                 doubleSpaceIndex = contentHTML.indexOf(DOUBLESPACE);
+                
             }
 
             // if contentHTML empty then return
-            if (contentHTML.isEmpty()) {
+            if (contentHTML.equals("")) {
                 return list;
             }
 
             // remove space if contentHMTL begin with space
             if (contentHTML.charAt(0) == SPACE) {
-                contentHTML = contentHTML.substring(1, contentHTML.length());
+                //contentHTML = contentHTML.substring(1, contentHTML.length());
+                contentHTML = contentHTML.delete(0,1);
             }
 
             // if contentHTML empty then return
-            if (contentHTML.isEmpty()) {
+            if (contentHTML.equals("")) {
                 return list;
             }
 
             // remove space if contentHTML end with space;
             if (contentHTML.charAt(contentHTML.length() - 1) != SPACE) {
-                contentHTML += SPACE;
+                contentHTML.append(SPACE);
             }
 
-            // get all articles
+            // get all words
             int beginSpaceIndex = 0;
-            int endSpaceIndex = contentHTML.indexOf(SPACE, beginSpaceIndex + 1);
+            int endSpaceIndex = contentHTML.indexOf(SPACE+"", beginSpaceIndex + 1);
             String word = "";
             while ((beginSpaceIndex <= endSpaceIndex) && (endSpaceIndex >= 0)) {
                 word = contentHTML.substring(beginSpaceIndex, endSpaceIndex);
                 if (isRealWord(word)) {
                     if (!list.contains(word)) {
                         list.add(word);
+                        //System.out.println(word);
                     }
                 }
                 beginSpaceIndex = endSpaceIndex + 1;
-                endSpaceIndex = contentHTML.indexOf(SPACE, beginSpaceIndex + 1);
+                endSpaceIndex = contentHTML.indexOf(SPACE+"", beginSpaceIndex + 1);
             }
 
         } catch (Exception e) {
@@ -123,8 +130,10 @@ public class StringHelper {
      * @param endTag
      * @return String of contentHTML with added tag
      */
-    public static String colorWord(String contentHTML, List<String> listWord, String beginTag, String endTag) {
-        String tempContent = contentHTML.toUpperCase();
+    public static String colorWord(String content, List<String> listWord, String beginTag, String endTag) {
+        //String tempContent = contentHTML.toUpperCase();
+        StringBuilder contentHTML = new StringBuilder(content);
+        StringBuilder tempContent = new StringBuilder(content.toUpperCase());
         try {
             int wordIndex = 0;
             int beginTagIndex = 0;
@@ -150,14 +159,14 @@ public class StringHelper {
                             if ((beginTagIndex < endTagIndex) && (beginTagIndex > 0)) {
                                 // add tag to tempContent
                                 temp = beginTag + word + endTag;
-                                tempContent = tempContent.substring(0, wordIndex) + temp
-                                        + tempContent.substring(wordIndex + word.length(), tempContent.length());
-
+                               // tempContent = tempContent.substring(0, wordIndex) + temp
+                               //         + tempContent.substring(wordIndex + word.length(), tempContent.length());
+                                tempContent.replace(wordIndex, wordIndex+word.length(), temp);
                                 // add tag to contentHTML- the return result
                                 temp = beginTag + contentHTML.substring(wordIndex, wordIndex + word.length()) + endTag;
-                                contentHTML = contentHTML.substring(0, wordIndex) + temp
-                                        + contentHTML.substring(wordIndex + word.length(), contentHTML.length());
-
+                               // contentHTML = contentHTML.substring(0, wordIndex) + temp
+                               //        + contentHTML.substring(wordIndex + word.length(), contentHTML.length());
+                                contentHTML.replace(wordIndex, wordIndex+word.length(), temp);
                                 // position for find next occur of the word
                                 wordIndex += (beginTag.length() + endTag.length() + word.length());
                             } else {
@@ -174,7 +183,7 @@ public class StringHelper {
         } catch (Exception e) {
 
         }
-        return contentHTML;
+        return contentHTML.toString();
     }
 
     /**
@@ -211,16 +220,16 @@ public class StringHelper {
 
     /**
      * [Give the description for method].
-     * @param contentHTML
      * @param listColorWord
      * @param listAllWord
      * @param beginNoColorTag
      * @param endNoColorTag
      * @return
      */
-    public static String colorAllWord(String contentHTML, List<String> listColorWord, List<String> listAllWord,
-                                      String beginNoColorTag, String endNoColorTag) {
-        String tempContent = contentHTML.toUpperCase();
+    public static String colorAllWord(String content, List<String> listColorWord, List<String> listAllWord,
+            String beginNoColorTag, String endNoColorTag) {
+        StringBuilder contentHTML = new StringBuilder(content);
+        StringBuilder tempContent = new StringBuilder(content.toUpperCase());
         try {
             int wordIndex = 0;
             int beginTagIndex = 0;
@@ -247,15 +256,15 @@ public class StringHelper {
                                 if ((beginTagIndex < endTagIndex) && (beginTagIndex > 0)) {
                                     // add tag to tempContent
                                     temp = beginNoColorTag + word + endNoColorTag;
-                                    tempContent = tempContent.substring(0, wordIndex) + temp
-                                            + tempContent.substring(wordIndex + word.length(), tempContent.length());
-
+                                   // tempContent = tempContent.substring(0, wordIndex) + temp
+                                   //         + tempContent.substring(wordIndex + word.length(), tempContent.length());
+                                    tempContent.replace(wordIndex, wordIndex+word.length(), temp);
                                     // add tag to contentHTML- the return result
                                     temp = beginNoColorTag + contentHTML.substring(wordIndex, wordIndex + word.length())
                                             + endNoColorTag;
-                                    contentHTML = contentHTML.substring(0, wordIndex) + temp
-                                            + contentHTML.substring(wordIndex + word.length(), contentHTML.length());
-
+                                   // contentHTML = contentHTML.substring(0, wordIndex) + temp
+                                   //         + contentHTML.substring(wordIndex + word.length(), contentHTML.length());
+                                    contentHTML.replace(wordIndex, wordIndex+word.length(), temp);
                                     // position for find next occur of the word
                                     wordIndex += (beginNoColorTag.length() + endNoColorTag.length() + word.length());
                                 } else {
@@ -273,9 +282,7 @@ public class StringHelper {
         } catch (Exception e) {
 
         }
-        return contentHTML;
+        return contentHTML.toString();
     }
-
-
 
 }

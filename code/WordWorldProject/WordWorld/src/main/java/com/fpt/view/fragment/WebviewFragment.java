@@ -38,6 +38,7 @@ import com.fpt.model.dal.WordDAL;
 import com.fpt.util.ContentUtils;
 import com.fpt.util.DisplayUtils;
 import com.fpt.util.HQTUtils;
+import com.fpt.util.StringBuilderHelper;
 import com.fpt.util.StringHelper;
 import com.fpt.view.R;
 import com.fpt.view.SharedActivity;
@@ -61,6 +62,9 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
     WebView webView;
 
     PopupWindow pw;
+
+    // For timing test
+    long begin2;
 
     View rootView;
 
@@ -99,6 +103,7 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         /** Load HTML here */
         if (activity.linkWebPage != null && !activity.linkWebPage.isEmpty()) {
             // Step 1
+            begin2 = (new Date()).getTime();
             (new ContentGetter(this)).execute(activity.linkWebPage);
         } else {
             webView.loadDataWithBaseURL("", HQTUtils.generateHTML(), "text/html", "UTF-8", "");
@@ -117,8 +122,12 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         return fadePopup;
     }
 
-
-    public void openAddWordPopup(String word) {
+    /**
+     *  unique_seq: a unique sequence number to identify which word was touched...
+     * @param word
+     * @param unique_seq
+     */
+    public void openAddWordPopup(String word, final String unique_seq) {
         // Create custom dialog object
         final Dialog dialog = new Dialog(getActivity());
 
@@ -156,7 +165,8 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
                     WordDAL.insertWord(activity.getApplicationContext(), w);
                 }
 
-                // Refresh HTML page
+                // Highlight the word
+                callJsUnwrap(unique_seq);
 
                 // Close dialog
                 dialog.dismiss();
@@ -173,7 +183,13 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         dialog.show();
     }
 
-    public void openRemoveWordPopup(String word) {
+
+    /**
+     *  unique_seq: a unique sequence number to identify which word was touched...
+     * @param word
+     * @param unique_seq
+     */
+    public void openRemoveWordPopup(String word, final String unique_seq) {
         // Create custom dialog object
         final Dialog dialog = new Dialog(getActivity());
 
@@ -221,6 +237,7 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
                 if (chkDelete.isChecked()) {
                     // Delete
                     WordDAL.deleteWordById(activity.getApplicationContext(), w.id);
+                    callJsWrap(unique_seq);
                 } else {
                     // Update the description
                     WordDAL.updateWordDescription(activity.getApplicationContext(), w.id, txtDescription.getText().toString());
@@ -242,14 +259,27 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
 
     @Override
     public void process(Article article) {
+        if (article == null) {
+            refreshWebView("<h1>Could not connect to internet! Please check your connection and try again</h1>");
+            return;
+        }
+
         // Step 2:
         // Step 1 - Step 2: Internet
-
+        long end2 = (new Date()).getTime();
+        Log.i("TimingDebug", "Internet: " + (end2-begin2)+"");
         // Step 3
 
-        // Get all word and insert to database
-        List<String> allWords = StringHelper.getListWord(article.content);
+        // Get all word
 
+        long begin3 = (new Date()).getTime();
+        List<String> allWords = StringBuilderHelper.getListWord(article.content);
+        long end3 = (new Date()).getTime();
+        Log.i("TimingDebug", "Alorithm 1: " + (end3-begin3)+"");
+
+        // Insert database
+
+        long begin4 = (new Date()).getTime();
         for (String word : allWords) {
             Word w = WordDAL.getWordByText(activity.getApplicationContext(), word);
             // If the word is not exists in database, then insert it.
@@ -267,16 +297,21 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         // Step 4:
         // Step 3 - 4: Database
 
+        long end4 = (new Date()).getTime();
+        Log.i("TimingDebug", "Database: " + (end4-begin4)+"");
+
         // Step 5
         // Get the color - tagged string
-        String html = StringHelper.colorAllWord(article.content,
+
+        long begin5 = (new Date()).getTime();
+        String html = StringBuilderHelper.colorAllWord(article.content,
                 DisplayUtils.listWordToListString(rememberedWords), allWords,
                 Config.OPEN_HIGHLIGHT_TAG, Config.CLOSE_HIGHLIGHT_TAG,
                 Config.OPEN_NO_HIGHLIGHT_TAG, Config.CLOSE_NO_HIGHLIGHT_TAG);
-
+        long end5 = (new Date()).getTime();
         // Step 6
-        // Step 5 - 6: alogrithm
-        Log.i("TimingDebug", "abc");
+        // Step 5 - 6: algorithm
+        Log.i("TimingDebug", "Alorigthm 2: " + (end5-begin5)+"");
         // Add CSS and Javascript for call back activity
         html = ContentUtils.addCSSJS(html);
 
@@ -286,7 +321,19 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
     }
 
     private void refreshWebView(String html) {
-        Log.i("StringHelperDebug", html);
         webView.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
+    }
+
+    private void testCallJs() {
+        Log.i("CallJSDebug", "called!");
+        webView.loadUrl("javascript:document.write('asd')");
+    }
+
+    private void callJsUnwrap(String unique_seq) {
+        webView.loadUrl("javascript:unwrap_word('"+unique_seq+"')");
+    }
+
+    private void callJsWrap(String unique_seq) {
+        webView.loadUrl("javascript:wrap_word('"+unique_seq+"')");
     }
 }

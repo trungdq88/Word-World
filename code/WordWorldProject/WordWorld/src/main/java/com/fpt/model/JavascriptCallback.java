@@ -29,15 +29,20 @@ public class JavascriptCallback {
         Toast.makeText(mContext, webMessage, Toast.LENGTH_LONG).show();
     }
 
-    public void addWord(String word) {
-        fragment.openAddWordPopup(word);
+    /**
+     * unique_seq: a unique sequence number to identify which word was touched...
+     * @param word
+     * @param unique_seq
+     */
+    public void addWord(String word, String unique_seq) {
+        fragment.openAddWordPopup(word, unique_seq);
     }
 
     /**
      * calling remove word popup
      */
-    public void removeWord(String word) {
-        fragment.openRemoveWordPopup(word);
+    public void removeWord(String word, String unique_seq) {
+        fragment.openRemoveWordPopup(word, unique_seq);
     }
 
 }

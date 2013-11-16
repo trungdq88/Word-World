@@ -52,7 +52,6 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
 
         /** extra parameters send from browser */
         Intent intent = this.getIntent();
-        Bundle extras = this.getIntent().getExtras();
         linkWebPage = intent.getStringExtra(Intent.EXTRA_TEXT);
 
 
@@ -110,11 +109,7 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
         // When the given dropdown item is selected, show its contents in the
         // container view.
 
-        Fragment fragment = new WebviewFragment();
-        Bundle arguments = new Bundle();
-        fragment.setArguments(arguments);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment).commit();
+
 
         return true;
     }
