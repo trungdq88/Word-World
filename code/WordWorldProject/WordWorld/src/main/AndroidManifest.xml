@@ -50,8 +50,8 @@
             android:label="@string/title_activity_article_view_fragment" >
         </activity>
         <activity
-            android:name="com.fpt.view.demo.CameraTest"
-            android:label="@string/title_activity_camera_test" >
+            android:name=".test.UnitTestActivity"
+            android:label="@string/title_activity_unit_test" >
         </activity>
     </application>
 

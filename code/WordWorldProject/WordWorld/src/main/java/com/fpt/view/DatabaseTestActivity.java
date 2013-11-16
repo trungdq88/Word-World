@@ -10,9 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.fpt.helper.NetworkBackground;
 import com.fpt.model.Article;
+import com.fpt.model.ContentGetter;
 import com.fpt.model.Word;
 import com.fpt.model.dal.ArticleDAL;
 import com.fpt.model.dal.WordDAL;
@@ -20,12 +23,15 @@ import com.fpt.provider.WWDBContract;
 import com.fpt.provider.WWDatabase;
 import com.fpt.util.DisplayUtils;
 import com.fpt.util.ParserUtils;
+import com.fpt.util.StringHelper;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DatabaseTestActivity extends ActionBarActivity {
-
+public class DatabaseTestActivity extends ActionBarActivity implements NetworkBackground.INetworkCallback{
+    public TextView textView;
+    public WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +46,8 @@ public class DatabaseTestActivity extends ActionBarActivity {
         // delete database
         WWDatabase.deleteDatabase(getApplicationContext());
 
-        TextView textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView);
+        webView = (WebView) findViewById(R.id.webViewASD);
         String str = "";
 
 //        Article a = new Article("http://google.com", "title1", "hello mot hai ba", (new Date()).getTime());
@@ -91,12 +98,9 @@ public class DatabaseTestActivity extends ActionBarActivity {
 //        wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
 //        str += " word by text after update status: " + wResult;
 
-        ParserUtils.getAricle("http://sohoa.vnexpress.net/tin-tuc/doi-song-so/fujifilm-se-ngung-san-xuat-phim-den-trang-3-x-4-lay-ngay-2911170.html");
-
-        textView.setText(str);
+        (new ContentGetter(this)).execute("http://www.howtogeek.com/175641/how-to-boot-and-install-linux-on-a-uefi-pc-with-secure-boot");
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,6 +120,20 @@ public class DatabaseTestActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void process(Article article) {
+        List<String> words = new ArrayList<String>();
+        words.add("embedded");
+        words.add("boot");
+        words.add("hiding");
+        words.add("operating");
+        words.add("add");
+        String html = StringHelper.colorWord(article.content, words, "<font color='red'>", "</font>");
+
+        webView.loadDataWithBaseURL("", html, "text/html","UTF-8","");
+        textView.setText("Result: " + article.toString());
     }
 
     /**
