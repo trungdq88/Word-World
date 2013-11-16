@@ -44,6 +44,7 @@ public class Query {
                 Word.THE_WORD,
                 Word.DESCRIPTION,
                 Word.STATUS,
+                Word.COUNT,
                 Word.CREATED
         };
     }
