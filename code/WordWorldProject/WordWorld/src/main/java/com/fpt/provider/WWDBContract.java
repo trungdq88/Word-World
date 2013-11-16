@@ -28,6 +28,7 @@ public class WWDBContract {
         String DESCRIPTION = "word_description";
         String STATUS = "word_status"; // 0: not in my dict, 1: in my dict.
         String CREATED = "word_created";
+        String COUNT = "word_count";
     }
 
 
