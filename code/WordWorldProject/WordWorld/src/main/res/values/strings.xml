@@ -16,4 +16,13 @@
     <string name="title_activity_add_word_popup">Add New Word</string>
     <string name="title_activity_remove_word_popup">RemoveWordPopup</string>
 
+    <array name="navigation_drawer_item">
+        <item>Vocabulary</item>
+        <item>All Vocabulary</item>
+        <item>Statistic</item>
+        <item>Save Article</item>
+    </array>
+
+    <string name="title_activity_all_vocabulary_fragment">All Vocabulary</string>
+
 </resources>

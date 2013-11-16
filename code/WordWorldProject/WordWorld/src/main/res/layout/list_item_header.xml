@@ -1,7 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    >
 
-</LinearLayout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/relativelayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:paddingLeft="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/linearLayout"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:src="@drawable/abc_ab_solid_light_holo" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_toRightOf="@id/relativelayout"
+        android:paddingLeft="4dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        >
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="Huynh Quang Thao"
+            android:paddingBottom="3dp"
+            android:textColor="#bec1ca"
+            android:id="@+id/name"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:maxLines="1"
+            android:paddingBottom="5dp"
+            android:id="@+id/mail"
+            android:textColor="#bec1ca"
+            android:text="quangthao93@yahoo"
+            />
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignBottom="@id/linearLayout"
+        android:background="#e0e0e0" />
+
+</RelativeLayout>

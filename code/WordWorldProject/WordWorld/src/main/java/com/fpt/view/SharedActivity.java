@@ -21,6 +21,8 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
      */
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
+    public String linkWebPage = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +53,8 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
         /** extra parameters send from browser */
         Intent intent = this.getIntent();
         Bundle extras = this.getIntent().getExtras();
-        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-        Toast.makeText(this.getBaseContext(), "Debug " + sharedText, Toast.LENGTH_LONG);
-        Log.e("Debug",  "Debug " + sharedText );
+        linkWebPage = intent.getStringExtra(Intent.EXTRA_TEXT);
+
 
         Fragment fragment = new WebviewFragment();
         Bundle arguments = new Bundle();

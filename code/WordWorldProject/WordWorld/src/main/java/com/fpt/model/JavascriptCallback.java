@@ -29,7 +29,6 @@ public class JavascriptCallback {
     }
 
     public void addWord(String word) {
-
         fragment.openAddWordPopup(word);
     }
 
@@ -37,7 +36,7 @@ public class JavascriptCallback {
      * calling remove word popup
      */
     public void removeWord(String word) {
-
+        fragment.openRemoveWordPopup(word);
     }
 
 }
