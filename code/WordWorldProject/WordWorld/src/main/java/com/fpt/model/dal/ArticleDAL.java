@@ -30,7 +30,7 @@ public class ArticleDAL {
         LOGD(TAG, "Adding an article");
 
         ContentValues cv = new ContentValues();
-        cv.put(WWDBContract.Article.TITLE, article.content);
+        cv.put(WWDBContract.Article.TITLE, article.title);
         cv.put(WWDBContract.Article.CONTENT, article.content);
         cv.put(WWDBContract.Article.URL, article.url);
         cv.put(WWDBContract.Article.CREATED, article.created);
