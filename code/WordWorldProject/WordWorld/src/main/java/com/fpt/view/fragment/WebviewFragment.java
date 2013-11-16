@@ -1,6 +1,7 @@
 package com.fpt.view.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -18,7 +19,9 @@ import android.os.Build;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +57,9 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
 
     WebView webView;
 
-    PopupWindow popup;
+    PopupWindow pw;
+
+    View rootView;
 
     public WebviewFragment() {
 
@@ -75,7 +80,7 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_webview, container, false);
+        rootView = inflater.inflate(R.layout.fragment_webview, container, false);
 
         webView = (WebView) rootView.findViewById(R.id.webview);
 
@@ -98,20 +103,30 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
     }
 
 
-    public void openAddWordPopup(String word) {
+    private PopupWindow dimBackground() {
 
-        Log.e("DEBUG", "comming");
-        // calling add word popup
         LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View layout = inflater.inflate(R.layout.fadepopup, null, false);
+        PopupWindow fadePopup = new PopupWindow(layout, rootView.getWidth(), rootView.getHeight(), false);
+        fadePopup.showAtLocation(layout, Gravity.NO_GRAVITY, 0, 0);
+        return fadePopup;
+    }
 
-        View layout = inflater.inflate(R.layout.popup_add_word, null, false);
 
-        /** inflat widget here */
-        Button saveBtn = (Button) layout.findViewById(R.id.btnSave);
-        Button cancelBtn = (Button) layout.findViewById(R.id.btnCancel);
-        EditText txtWord = (EditText) layout.findViewById(R.id.txtWord);
-        EditText txtDescription = (EditText) layout.findViewById(R.id.txtDescription);
+    public void openAddWordPopup(String word) {
+        // Create custom dialog object
+        final Dialog dialog = new Dialog(getActivity());
+
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.popup_add_word);
+        // Set dialog title
+        dialog.setTitle("Add Word Dialog");
+
+        Button saveBtn = (Button) dialog.findViewById(R.id.btnSave);
+        Button cancelBtn = (Button) dialog.findViewById(R.id.btnCancel);
+        EditText txtWord = (EditText) dialog.findViewById(R.id.txtWord);
+        EditText txtDescription = (EditText) dialog.findViewById(R.id.txtDescription);
 
         // assign text to word TextView
         txtWord.setText(word);
@@ -123,47 +138,33 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
             }
         });
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
             }
         });
 
-        PopupWindow pw = new PopupWindow(
-                layout,
-                200,
-                200,
-                true);
-
-
-        /** simple animation */
-        pw.setAnimationStyle(android.R.style.Animation_Dialog);
-
-        // The code below assumes that the root container has an id called 'main'
-        pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
-
+        dialog.show();
     }
 
     public void openRemoveWordPopup(String word) {
-        // calling add word popup
-        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        // Create custom dialog object
+        final Dialog dialog = new Dialog(getActivity());
 
-        View layout = inflater.inflate(R.layout.popup_remove_word, null, false);
-
-        PopupWindow pw = new PopupWindow(
-                layout,
-                200,
-                200,
-                true);
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.popup_remove_word);
+        // Set dialog title
+        dialog.setTitle("Remove Word Dialog");
 
         /** inflat widget here */
-        Button editBtn = (Button) layout.findViewById(R.id.btnEdit);
-        Button removeBtn = (Button) layout.findViewById(R.id.btnRemove);
-        EditText txtWord = (EditText) layout.findViewById(R.id.txtWord);
+        Button editBtn = (Button) dialog.findViewById(R.id.btnEdit);
+        Button removeBtn = (Button) dialog.findViewById(R.id.btnRemove);
+        EditText txtWord = (EditText) dialog.findViewById(R.id.txtWord);
 
         // assign text into TextView
         txtWord.setText(word);
@@ -178,14 +179,9 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         removeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
             }
         });
-
-        /** simple animation */
-        pw.setAnimationStyle(android.R.style.Animation_Dialog);
-
-        // The code below assumes that the root container has an id called 'main'
-        pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
 
     }
 
