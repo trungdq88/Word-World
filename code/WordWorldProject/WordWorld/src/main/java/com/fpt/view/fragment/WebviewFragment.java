@@ -18,8 +18,11 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -95,6 +98,7 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
 
         /** Load HTML here */
         if (activity.linkWebPage != null && !activity.linkWebPage.isEmpty()) {
+            // Step 1
             (new ContentGetter(this)).execute(activity.linkWebPage);
         } else {
             webView.loadDataWithBaseURL("", HQTUtils.generateHTML(), "text/html", "UTF-8", "");
@@ -121,24 +125,41 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         // Include dialog.xml file
         dialog.setContentView(R.layout.popup_add_word);
         // Set dialog title
-        dialog.setTitle("Add Word Dialog");
+        dialog.setTitle(getString(R.string.title_activity_add_word_popup));
 
         Button saveBtn = (Button) dialog.findViewById(R.id.btnSave);
         Button cancelBtn = (Button) dialog.findViewById(R.id.btnCancel);
-        EditText txtWord = (EditText) dialog.findViewById(R.id.txtWord);
-        EditText txtDescription = (EditText) dialog.findViewById(R.id.txtDescription);
+        final EditText txtWord = (EditText) dialog.findViewById(R.id.txtWord);
+        final EditText txtDescription = (EditText) dialog.findViewById(R.id.txtAddDescription);
 
         // assign text to word TextView
         txtWord.setText(word);
         if (activity.linkWebPage != null) {
-            txtWord.setText(activity.linkWebPage);
+            txtWord.setText(word);
         }
 
         // add action code for button
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String wordText = txtWord.getText().toString();
+                String wordDescription = txtDescription.getText().toString();
+                // Check if the word is exists
+                Word checkWord = WordDAL.getWordByText(activity.getApplicationContext(), wordText);
+                if (checkWord != null) {
+                    // the word is exists
+                    WordDAL.updateWordStatus(activity.getApplicationContext(), checkWord.id, 1);
+                    WordDAL.updateWordDescription(activity.getApplicationContext(), checkWord.id, wordDescription);
+                } else {
+                    // the word is not exists (should not happen)
+                    Word w = new Word(wordText, wordDescription, 1, 1, (new Date()).getTime());
+                    WordDAL.insertWord(activity.getApplicationContext(), w);
+                }
 
+                // Refresh HTML page
+
+                // Close dialog
+                dialog.dismiss();
             }
         });
 
@@ -159,34 +180,73 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         // Include dialog.xml file
         dialog.setContentView(R.layout.popup_remove_word);
         // Set dialog title
-        dialog.setTitle("Remove Word Dialog");
+        dialog.setTitle("Edit word");
 
         /** inflat widget here */
-        Button editBtn = (Button) dialog.findViewById(R.id.btnEdit);
-        Button removeBtn = (Button) dialog.findViewById(R.id.btnRemove);
-        EditText txtWord = (EditText) dialog.findViewById(R.id.txtWord);
+        final Button editBtn = (Button) dialog.findViewById(R.id.btnEdit);
+        final Button cancelBtn = (Button) dialog.findViewById(R.id.btnCalcel);
+        final EditText txtWord = (EditText) dialog.findViewById(R.id.txtWord);
+        final EditText txtDescription = (EditText) dialog.findViewById(R.id.txtDescription);
+        final CheckBox chkDelete = (CheckBox) dialog.findViewById(R.id.chkDelete);
+        final LinearLayout wordLayout = (LinearLayout) dialog.findViewById(R.id.linear_layout_word);
+        final LinearLayout descriptionLayout = (LinearLayout) dialog.findViewById(R.id.linear_layout_description);
+
+
+        final Word w = WordDAL.getWordByText(activity.getApplicationContext(), word);
 
         // assign text into TextView
-        txtWord.setText(word);
+        txtWord.setText(w.the_word);
+        txtDescription.setText(w.description);
+        Log.i("RemoveWordDebug", w.toString());
 
-        // add action here
-        editBtn.setOnClickListener(new View.OnClickListener() {
+        // Checkbox action
+        chkDelete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Log.i("CheckboxDebug", String.valueOf(chkDelete.isChecked()));
+                if (chkDelete.isChecked()) {
+                    wordLayout.setVisibility(View.INVISIBLE);
+                    descriptionLayout.setVisibility(View.INVISIBLE);
+                } else {
+                    wordLayout.setVisibility(View.VISIBLE);
+                    descriptionLayout.setVisibility(View.VISIBLE);
+                }
             }
         });
 
-        removeBtn.setOnClickListener(new View.OnClickListener() {
+        // save action
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chkDelete.isChecked()) {
+                    // Delete
+                    WordDAL.deleteWordById(activity.getApplicationContext(), w.id);
+                } else {
+                    // Update the description
+                    WordDAL.updateWordDescription(activity.getApplicationContext(), w.id, txtDescription.getText().toString());
+                }
+                dialog.dismiss();
+            }
+        });
+
+        // cancel
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
             }
         });
 
+        dialog.show();
     }
 
     @Override
     public void process(Article article) {
+        // Step 2:
+        // Step 1 - Step 2: Internet
+
+        // Step 3
+
         // Get all word and insert to database
         List<String> allWords = StringHelper.getListWord(article.content);
 
@@ -194,30 +254,39 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
             Word w = WordDAL.getWordByText(activity.getApplicationContext(), word);
             // If the word is not exists in database, then insert it.
             if (w == null) {
-                WordDAL.insertWord(activity.getApplicationContext(), new Word(word, "", 0, 0, (new Date()).getTime()));
+                WordDAL.insertWord(activity.getApplicationContext(), new Word(word, "", 0, 1, (new Date()).getTime()));
             } else {
                 // If the word is already in database, then increase the counter
                 WordDAL.updateSeenCount(activity.getApplicationContext(), w.id);
             }
         }
 
-        // TODO: insert article
+        // Get all word in database with status 0 ("remembered")
+        List<Word> rememberedWords = WordDAL.getAllWordsWithStatus(activity.getApplicationContext(), 0);
 
+        // Step 4:
+        // Step 3 - 4: Database
 
-        // Get all word in database with status 1 ("remembered")
-        List<Word> rememberedWords = WordDAL.getAllWordsWithStatus(activity.getApplicationContext(), 1);
-
-
+        // Step 5
         // Get the color - tagged string
-        String html = StringHelper.colorWord(article.content,
-                DisplayUtils.listWordToListString(rememberedWords),
-                Config.OPEN_HIGHLIGHT_TAG, Config.CLOSE_HIGHLIGHT_TAG);
+        String html = StringHelper.colorAllWord(article.content,
+                DisplayUtils.listWordToListString(rememberedWords), allWords,
+                Config.OPEN_HIGHLIGHT_TAG, Config.CLOSE_HIGHLIGHT_TAG,
+                Config.OPEN_NO_HIGHLIGHT_TAG, Config.CLOSE_NO_HIGHLIGHT_TAG);
 
-
+        // Step 6
+        // Step 5 - 6: alogrithm
+        Log.i("TimingDebug", "abc");
         // Add CSS and Javascript for call back activity
         html = ContentUtils.addCSSJS(html);
 
         // Display things
+        //webView.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
+        refreshWebView(html);
+    }
+
+    private void refreshWebView(String html) {
+        Log.i("StringHelperDebug", html);
         webView.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
     }
 }

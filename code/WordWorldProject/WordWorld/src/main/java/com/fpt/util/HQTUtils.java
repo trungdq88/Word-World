@@ -22,7 +22,7 @@ public class HQTUtils {
                 "for (var i = 0; i < elements.length; i++) {   \n" +
                 "\n" +
                 " elements[i].onclick = function() {\n" +
-                "\tAndroidCallback.addWord(this.innerText);\n" +
+                "\tAndroidCallback.removeWord(this.innerText);\n" +
                 " }\n" +
                 "\n" +
                 "}\n" +

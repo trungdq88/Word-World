@@ -42,7 +42,7 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[] {
-                                "Tran kim du",
+                                getString(R.string.title_section1),
                                 getString(R.string.title_section2),
                                 getString(R.string.title_section3),
                         }),
