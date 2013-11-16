@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
 
-import com.fpt.view.com.fpt.view.fragment.NavigationDrawerFragment;
+import com.fpt.view.fragment.NavigationDrawerFragment;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {

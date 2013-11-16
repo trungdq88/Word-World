@@ -12,8 +12,17 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_shared">Shared Activity</string>
     <string name="title_activity_database_test">Database Test</string>
-    <string name="title_activity_word_view_fragment">WordViewFragment</string>
-    <string name="title_activity_article_view_fragment">ArticleViewFragment</string>
-    <string name="title_activity_unit_test">MainActivity</string>
+    <string name="new_word">New Word</string>
+    <string name="title_activity_add_word_popup">Add New Word</string>
+    <string name="title_activity_remove_word_popup">RemoveWordPopup</string>
+
+    <array name="navigation_drawer_item">
+        <item>Vocabulary</item>
+        <item>All Vocabulary</item>
+        <item>Statistic</item>
+        <item>Save Article</item>
+    </array>
+
+    <string name="title_activity_all_vocabulary_fragment">All Vocabulary</string>
 
 </resources>

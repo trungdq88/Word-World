@@ -25,6 +25,6 @@
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        class="com.fpt.view.com.fpt.view.fragment.NavigationDrawerFragment" />
+        class="com.fpt.view.fragment.NavigationDrawerFragment" />
 
 </android.support.v4.widget.DrawerLayout>

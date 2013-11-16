@@ -9,10 +9,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fpt.view.com.fpt.view.fragment.WebviewFragment;
+import com.fpt.view.fragment.WebviewFragment;
 
 public class SharedActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
@@ -21,6 +20,8 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
      * current dropdown position.
      */
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+
+    public String linkWebPage = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[] {
-                                getString(R.string.title_section1),
+                                "Tran kim du",
                                 getString(R.string.title_section2),
                                 getString(R.string.title_section3),
                         }),
@@ -52,9 +53,8 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
         /** extra parameters send from browser */
         Intent intent = this.getIntent();
         Bundle extras = this.getIntent().getExtras();
-        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-        Toast.makeText(this.getBaseContext(), "Debug " + sharedText, Toast.LENGTH_LONG);
-        Log.e("Debug",  "Debug " + sharedText );
+        linkWebPage = intent.getStringExtra(Intent.EXTRA_TEXT);
+
 
         Fragment fragment = new WebviewFragment();
         Bundle arguments = new Bundle();
@@ -116,11 +116,6 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment).commit();
 
-
-
-       /* getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();*/
         return true;
     }
 }

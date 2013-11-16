@@ -1,4 +1,4 @@
-package com.fpt.view.com.fpt.view.fragment;
+package com.fpt.view.fragment;
 
 import android.support.v7.app.ActionBarActivity;;
 import android.app.Activity;
@@ -22,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.fpt.helper.adapter.NavigationDrawerAdapter;
 import com.fpt.view.R;
 
 /**
@@ -29,7 +30,7 @@ import com.fpt.view.R;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements NavigationDrawerAdapter.IItemDelegate {
 
     /**
      * Remember the position of the selected item.
@@ -286,6 +287,11 @@ public class NavigationDrawerFragment extends Fragment {
 
     private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
+    }
+
+    @Override
+    public void gotoCategoryPage(NavigationDrawerAdapter.ItemAdapter.TYPE type) {
+        
     }
 
     /**
