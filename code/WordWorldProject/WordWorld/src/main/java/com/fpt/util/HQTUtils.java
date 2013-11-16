@@ -23,7 +23,7 @@ public class HQTUtils {
                 "\n" +
                 " elements[i].onclick = function() {\n" +
                 "    console.log(this.innerText);\n" +
-                "\tAndroidCallback.showToast(this.innerText);\n" +
+                "\tAndroidCallback.addWord(this.innerText);\n" +
                 " }\n" +
                 "\n" +
                 "}\n" +

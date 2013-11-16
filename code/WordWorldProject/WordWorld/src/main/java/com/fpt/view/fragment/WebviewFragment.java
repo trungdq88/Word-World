@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.webkit.WebView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.fpt.model.JavascriptCallback;
@@ -28,6 +30,8 @@ public class WebviewFragment extends Fragment  {
 
     /** using Handler for manipulated UI Thread */
     final Handler myHandler = new Handler();
+
+    PopupWindow popup;
 
     public WebviewFragment() {
 
@@ -54,7 +58,8 @@ public class WebviewFragment extends Fragment  {
         /** enable javascript for callback */
         webView.getSettings().setJavaScriptEnabled(true);
         /** register a javascript interface */
-        webView.addJavascriptInterface(new JavascriptCallback(getActivity().getApplicationContext()), "AndroidCallback");
+        JavascriptCallback callback = new JavascriptCallback(this, this.getActivity().getApplicationContext());
+        webView.addJavascriptInterface(callback, "AndroidCallback");
 
         webView.loadDataWithBaseURL("", HQTUtils.generateHTML(), "text/html", "UTF-8", "");
 
@@ -62,5 +67,25 @@ public class WebviewFragment extends Fragment  {
     }
 
 
+    public void openAddWordPopup(String word) {
+        // calling add word popup
+        LayoutInflater inflater = (LayoutInflater) getActivity().getBaseContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        View layout = inflater.inflate(R.layout.popup_add_word, null, false);
+
+        PopupWindow pw = new PopupWindow(
+                layout,
+                200,
+                200,
+                true);
+
+
+        /** simple animation */
+        pw.setAnimationStyle(android.R.style.Animation_Dialog);
+
+        // The code below assumes that the root container has an id called 'main'
+        pw.showAtLocation(layout, Gravity.BOTTOM, 0, 0);
+
+    }
 }

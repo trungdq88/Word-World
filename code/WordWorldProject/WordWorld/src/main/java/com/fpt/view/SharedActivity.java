@@ -40,7 +40,7 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1,
                         new String[] {
-                                getString(R.string.title_section1),
+                                "Tran kim du",
                                 getString(R.string.title_section2),
                                 getString(R.string.title_section3),
                         }),
@@ -115,11 +115,6 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment).commit();
 
-
-
-       /* getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();*/
         return true;
     }
 }

@@ -1,16 +1,26 @@
 package com.fpt.model;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
-/**
- * Created by Huynh Quang Thao on 11/16/13.
- */
+import com.fpt.view.R;
+import com.fpt.view.fragment.WebviewFragment;
+import com.fpt.view.popup.AddWordPopup;
+
 public class JavascriptCallback {
     Context mContext;
+    WebviewFragment fragment;
 
-    public JavascriptCallback(Context context) {
+
+    public JavascriptCallback(WebviewFragment fragment, Context context) {
         this.mContext = context;
+        this.fragment = fragment;
     }
 
     public void showToast(String webMessage){
@@ -19,6 +29,14 @@ public class JavascriptCallback {
     }
 
     public void addWord(String word) {
+
+        fragment.openAddWordPopup(word);
+    }
+
+    /**
+     * calling remove word popup
+     */
+    public void removeWord(String word) {
 
     }
 
