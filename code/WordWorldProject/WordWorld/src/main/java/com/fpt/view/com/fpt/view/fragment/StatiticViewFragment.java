@@ -11,29 +11,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.fpt.view.MainActivity;
 import com.fpt.view.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.fpt.util.LogUtils.makeLogTag;
 
-public class WordViewFragment extends Fragment {
+public class StatiticViewFragment extends Fragment {
 
 
-    public static String TAG = makeLogTag(WordViewFragment.class);
+    public static String TAG = makeLogTag(StatiticViewFragment.class);
 
     /** Main Activity for reference */
     MainActivity activity;
 
-    public WordViewFragment() {
+    public StatiticViewFragment() {
 
     }
 
@@ -51,7 +43,7 @@ public class WordViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.statitic_view_fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.statitic_view_fragment_activity, container, false);
 
         // Busniess code here
 //        TextView textView = (TextView) rootView.findViewById(R.id.textView);
@@ -59,8 +51,6 @@ public class WordViewFragment extends Fragment {
 
         return rootView;
     }
-
-
 
 
 }

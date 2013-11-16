@@ -47,7 +47,6 @@
             android:exported="true"
             android:label="@string/title_activity_database_test" >
         </activity>
-
         <activity
             android:name="com.fpt.view.AddWordPopup"
             android:label="@string/title_activity_add_word_popup" >
@@ -59,6 +58,10 @@
         <activity
             android:name="com.fpt.view.AllVocabularyFragment"
             android:label="@string/title_activity_all_vocabulary_fragment" >
+        </activity>
+        <activity
+            android:name="com.fpt.view.StatiticViewFragment"
+            android:label="@string/title_activity_statitic_view_fragment" >
         </activity>
     </application>
 

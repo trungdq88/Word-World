@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.fpt.helper.adapter.NavigationDrawerAdapter;
 import com.fpt.view.R;
 import com.fpt.view.com.fpt.view.fragment.ArticleViewFragment;
+import com.fpt.view.com.fpt.view.fragment.StatiticViewFragment;
 import com.fpt.view.com.fpt.view.fragment.WordViewFragment;
 
 /**
@@ -103,7 +104,7 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 new String[]{
-                        "Dinh Quang Trung",
+                        getString(R.string.title_section1),
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
                 }));
@@ -208,13 +209,20 @@ public class NavigationDrawerFragment extends Fragment implements NavigationDraw
         }
         switch (position) {
             case 0: {
+                Fragment statiticViewFragment = new StatiticViewFragment();
+                Bundle arguments = new Bundle();
+                statiticViewFragment.setArguments(arguments);
+                mCallbacks.onNavigationDrawerItemSelected(statiticViewFragment);
+                break;
+            }
+            case 1: {
                 Fragment wordViewFragment = new WordViewFragment();
                 Bundle arguments = new Bundle();
                 wordViewFragment.setArguments(arguments);
                 mCallbacks.onNavigationDrawerItemSelected(wordViewFragment);
                 break;
             }
-            case 1: {
+            case 2: {
                 Fragment articleViewFragment = new ArticleViewFragment();
                 mCallbacks.onNavigationDrawerItemSelected(articleViewFragment);
                 break;
