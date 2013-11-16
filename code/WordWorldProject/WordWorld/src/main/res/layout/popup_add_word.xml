@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:layout_marginLeft="30dp"
-            android:text="New World"/>
+            android:text="Word"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="7"
-            android:id="@+id/txtDescription"/>
+            android:id="@+id/txtAddDescription"/>
     </LinearLayout>
 
     <LinearLayout
@@ -52,7 +52,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="Add"
             android:layout_weight="3"
             android:id="@+id/btnSave"/>
 

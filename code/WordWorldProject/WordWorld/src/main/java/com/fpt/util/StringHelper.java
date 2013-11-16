@@ -3,16 +3,11 @@ package com.fpt.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.fpt.util.LogUtils.LOGD;
-import static com.fpt.util.LogUtils.makeLogTag;
-
 /**
- * 
  * @author Mr Dj Thuk
- *
  */
 public class StringHelper {
-    private static final String TAG = makeLogTag(StringHelper.class);
+
     private static final String TAGBEGIN = "<";
     private static final String TAGEND = ">";
     private static final String DOUBLESPACE = "00";
@@ -99,9 +94,9 @@ public class StringHelper {
                 beginSpaceIndex = endSpaceIndex + 1;
                 endSpaceIndex = contentHTML.indexOf(SPACE, beginSpaceIndex + 1);
             }
-            
-        } catch(Exception e){
-            LOGD(TAG, "Get All Words");
+
+        } catch (Exception e) {
+
         }
         return list;
     }
@@ -143,27 +138,33 @@ public class StringHelper {
                     // get next index of word from the previous index
                     wordIndex = tempContent.indexOf(wordFind, wordIndex);
                     if (wordIndex > 0) {
-                        // get the next begin tag from the word
-                        beginTagIndex = tempContent.indexOf(TAGBEGIN, wordIndex);
-                        // get the next end tag from the word
-                        endTagIndex = tempContent.indexOf(TAGEND, wordIndex);
-                        // if the word is in the content then change word
+                        char charAfterWord = tempContent.charAt(wordIndex + word.length());
+                        char charBeforeWord = tempContent.charAt(wordIndex - 1);
+                        if (!Character.isLetter(charAfterWord) && !Character.isLetter(charBeforeWord)) {
+                            // get the next begin tag from the word
+                            beginTagIndex = tempContent.indexOf(TAGBEGIN, wordIndex);
+                            // get the next end tag from the word
+                            endTagIndex = tempContent.indexOf(TAGEND, wordIndex);
+                            // if the word is in the content then change word
 
-                        if ((beginTagIndex < endTagIndex) && (beginTagIndex > 0)) {
-                            // add tag to tempContent
-                            temp = beginTag + word + endTag;
-                            tempContent = tempContent.substring(0, wordIndex) + temp
-                                    + tempContent.substring(wordIndex + word.length(), tempContent.length());
+                            if ((beginTagIndex < endTagIndex) && (beginTagIndex > 0)) {
+                                // add tag to tempContent
+                                temp = beginTag + word + endTag;
+                                tempContent = tempContent.substring(0, wordIndex) + temp
+                                        + tempContent.substring(wordIndex + word.length(), tempContent.length());
 
-                            // add tag to contentHTML- the return result
-                            temp = beginTag + contentHTML.substring(wordIndex, wordIndex + word.length()) + endTag;
-                            contentHTML = contentHTML.substring(0, wordIndex) + temp
-                                    + contentHTML.substring(wordIndex + word.length(), contentHTML.length());
+                                // add tag to contentHTML- the return result
+                                temp = beginTag + contentHTML.substring(wordIndex, wordIndex + word.length()) + endTag;
+                                contentHTML = contentHTML.substring(0, wordIndex) + temp
+                                        + contentHTML.substring(wordIndex + word.length(), contentHTML.length());
 
-                            // position for find next occur of the word
-                            wordIndex += (beginTag.length() + endTag.length() + word.length());
+                                // position for find next occur of the word
+                                wordIndex += (beginTag.length() + endTag.length() + word.length());
+                            } else {
+                                wordIndex = endTagIndex;
+                            }
                         } else {
-                            wordIndex = endTagIndex;
+                            wordIndex += word.length();
                         }
                     }
 
@@ -171,7 +172,7 @@ public class StringHelper {
             }
 
         } catch (Exception e) {
-            LOGD(TAG, "color word");
+
         }
         return contentHTML;
     }
@@ -198,6 +199,81 @@ public class StringHelper {
         }
         rate = (double) noOfKnowWord / listWord.size();
         return rate;
+    }
+
+    public static String colorAllWord(String contentHTML, List<String> listColorWord, List<String> listAllWord,
+                                      String beginTag, String endTag,
+                                      String beginNoColorTag, String endNoColorTag) {
+        String string1 = colorWord(contentHTML, listColorWord, beginTag, endTag);
+        string1 = colorAllWord(string1, listColorWord, listAllWord, beginNoColorTag, endNoColorTag);
+        return string1;
+    }
+
+    /**
+     * [Give the description for method].
+     * @param contentHTML
+     * @param listColorWord
+     * @param listAllWord
+     * @param beginNoColorTag
+     * @param endNoColorTag
+     * @return
+     */
+    public static String colorAllWord(String contentHTML, List<String> listColorWord, List<String> listAllWord,
+                                      String beginNoColorTag, String endNoColorTag) {
+        String tempContent = contentHTML.toUpperCase();
+        try {
+            int wordIndex = 0;
+            int beginTagIndex = 0;
+            int endTagIndex = 0;
+            String temp = "";
+            String wordFind = "";
+            for (String word : listAllWord) {
+                if (!listColorWord.contains(word)) {
+                    do {
+                        // upper case the word
+                        wordFind = word.toUpperCase();
+                        // get next index of word from the previous index
+                        wordIndex = tempContent.indexOf(wordFind, wordIndex);
+                        if (wordIndex > 0) {
+                            char charAfterWord = tempContent.charAt(wordIndex + word.length());
+                            char charBeforeWord = tempContent.charAt(wordIndex - 1);
+                            if (!Character.isLetter(charAfterWord) && !Character.isLetter(charBeforeWord)) {
+                                // get the next begin tag from the word
+                                beginTagIndex = tempContent.indexOf(TAGBEGIN, wordIndex);
+                                // get the next end tag from the word
+                                endTagIndex = tempContent.indexOf(TAGEND, wordIndex);
+                                // if the word is in the content then change word
+
+                                if ((beginTagIndex < endTagIndex) && (beginTagIndex > 0)) {
+                                    // add tag to tempContent
+                                    temp = beginNoColorTag + word + endNoColorTag;
+                                    tempContent = tempContent.substring(0, wordIndex) + temp
+                                            + tempContent.substring(wordIndex + word.length(), tempContent.length());
+
+                                    // add tag to contentHTML- the return result
+                                    temp = beginNoColorTag + contentHTML.substring(wordIndex, wordIndex + word.length())
+                                            + endNoColorTag;
+                                    contentHTML = contentHTML.substring(0, wordIndex) + temp
+                                            + contentHTML.substring(wordIndex + word.length(), contentHTML.length());
+
+                                    // position for find next occur of the word
+                                    wordIndex += (beginNoColorTag.length() + endNoColorTag.length() + word.length());
+                                } else {
+                                    wordIndex = endTagIndex;
+                                }
+                            } else {
+                                wordIndex += word.length();
+                            }
+                        }
+
+                    } while (wordIndex > 0);
+                }
+            }
+
+        } catch (Exception e) {
+
+        }
+        return contentHTML;
     }
 
 }
