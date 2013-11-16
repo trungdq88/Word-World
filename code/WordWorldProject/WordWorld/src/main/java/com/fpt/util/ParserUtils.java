@@ -3,6 +3,10 @@ package com.fpt.util;
 import android.util.Log;
 
 import com.fpt.model.Article;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +16,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 /**
  * Created by Huynh Quang Thao on 11/15/13.
@@ -20,6 +25,7 @@ public class ParserUtils {
 
     /**
      * Cast the input stream to String
+     *
      * @param stream
      * @return String
      * @throws IOException
@@ -49,6 +55,7 @@ public class ParserUtils {
 
     /**
      * get Json string by a url
+     *
      * @param url
      * @return Json
      * @throws IOException
@@ -76,6 +83,16 @@ public class ParserUtils {
                 is.close();
             }
         }
+    }
+
+    public static Article getAricle(String jsonString) {
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
+        String url = jsonObject.get("url").getAsString();
+        String title = jsonObject.get("title").getAsString();
+        String content = jsonObject.get("content").getAsString();
+        Article article = new Article(0, url, title, content, new Date().getTime());
+        return article;
     }
 
 
