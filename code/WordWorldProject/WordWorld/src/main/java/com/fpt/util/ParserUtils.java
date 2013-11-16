@@ -2,6 +2,7 @@ package com.fpt.util;
 
 import android.util.Log;
 
+import com.fpt.config.Config;
 import com.fpt.model.Article;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,7 +20,7 @@ import java.net.URL;
 import java.util.Date;
 
 /**
- * Created by Huynh Quang Thao on 11/15/13.
+ * Created by Thanh Hai on 11/15/13.
  */
 public class ParserUtils {
 
@@ -31,7 +32,7 @@ public class ParserUtils {
      * @throws IOException
      * @throws UnsupportedEncodingException
      */
-    public static String convertInputStreamToString(InputStream stream) throws IOException {
+    public static String convertInputStreamToString(InputStream stream) {
 //        Reader reader = null;
 //        reader = new InputStreamReader(stream, "UTF-8");
 //        char[] buffer = new char[len];
@@ -46,24 +47,43 @@ public class ParserUtils {
                 sb.append(line);
             }
             return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         } finally {
             if (br != null) {
-                br.close();
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     /**
+     * make a request url from article url
+     *
+     * @param articleUrl
+     * @return
+     */
+    private static String makeUrl(String articleUrl) {
+        String url = "https://www.readability.com/api/content/v1/parser?url=" + articleUrl + "&token=" + Config.READABILITY_API_TOKEN;
+        return url;
+    }
+
+    /**
      * get Json string by a url
      *
-     * @param url
+     * @param articleUrl
      * @return Json
      * @throws IOException
      */
-    public static String getJsonString(String url) throws IOException {
+    public static String getJsonString(String articleUrl) {
         InputStream is = null;
         // Only display the first 500 characters of the retrieved
         // web page content.
+        String url = makeUrl(articleUrl);
         try {
             // Starts the query
             HttpURLConnection conn = NetworkUtils.getConnection(url);
@@ -74,25 +94,40 @@ public class ParserUtils {
 
             // Convert the InputStream into a string
             String contentAsString = convertInputStreamToString(is);
+
             return contentAsString;
 
             // Makes sure that the InputStream is closed after the app is
             // finished using it.
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         } finally {
             if (is != null) {
-                is.close();
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    public static Article getAricle(String jsonString) {
-        Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
-        String url = jsonObject.get("url").getAsString();
-        String title = jsonObject.get("title").getAsString();
-        String content = jsonObject.get("content").getAsString();
-        Article article = new Article(0, url, title, content, new Date().getTime());
-        return article;
+    public static Article getAricle(String articleUrl) {
+        try {
+            String jsonString = null;
+            jsonString = getJsonString(articleUrl);
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
+            String url = jsonObject.get("url").getAsString();
+            String title = jsonObject.get("title").getAsString();
+            String content = jsonObject.get("content").getAsString();
+            Article article = new Article(0, url, title, content, new Date().getTime());
+            return article;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
