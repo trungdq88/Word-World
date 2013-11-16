@@ -13,6 +13,7 @@ import android.os.Build;
 import android.webkit.WebView;
 import android.widget.TextView;
 
+import com.fpt.config.Config;
 import com.fpt.helper.NetworkBackground;
 import com.fpt.model.Article;
 import com.fpt.model.ContentGetter;
@@ -21,6 +22,7 @@ import com.fpt.model.dal.ArticleDAL;
 import com.fpt.model.dal.WordDAL;
 import com.fpt.provider.WWDBContract;
 import com.fpt.provider.WWDatabase;
+import com.fpt.util.ContentUtils;
 import com.fpt.util.DisplayUtils;
 import com.fpt.util.ParserUtils;
 import com.fpt.util.StringHelper;
@@ -46,9 +48,16 @@ public class DatabaseTestActivity extends ActionBarActivity implements NetworkBa
         // delete database
         WWDatabase.deleteDatabase(getApplicationContext());
 
-        textView = (TextView) findViewById(R.id.textView);
-        webView = (WebView) findViewById(R.id.webViewASD);
-        String str = "";
+        WordDAL.insertWord(getApplicationContext(), new Word("who", "", 1, 1, (new Date()).getTime()));
+        WordDAL.insertWord(getApplicationContext(), new Word("one", "", 1, 1, (new Date()).getTime()));
+        WordDAL.insertWord(getApplicationContext(), new Word("for", "", 1, 1, (new Date()).getTime()));
+        WordDAL.insertWord(getApplicationContext(), new Word("but", "", 1, 1, (new Date()).getTime()));
+        WordDAL.insertWord(getApplicationContext(), new Word("the", "", 1, 1, (new Date()).getTime()));
+
+//
+//        textView = (TextView) findViewById(R.id.textView);
+//        webView = (WebView) findViewById(R.id.webViewASD);
+//        String str = "";
 
 //        Article a = new Article("http://google.com", "title1", "hello mot hai ba", (new Date()).getTime());
 //        Article a2 = new Article("http://google2.com", "title2", "hello 2 mot hai ba", (new Date()).getTime());
@@ -65,14 +74,16 @@ public class DatabaseTestActivity extends ActionBarActivity implements NetworkBa
 //        str += "All articles: " + DisplayUtils.arrayToString(result1);
 
 
-        Word w1 = new Word("the", "the the", 1, 0, (new Date()).getTime());
-        Word w2 = new Word("the2", "the the2", 0, 0, (new Date()).getTime());
-        Word w3 = new Word("the3", "the the3", 1, 0, (new Date()).getTime());
-        Word w4 = new Word("the4", "the the4", 1, 0, (new Date()).getTime());
-        WordDAL.insertWord(getApplicationContext(), w1);
-        WordDAL.insertWord(getApplicationContext(), w2);
-        WordDAL.insertWord(getApplicationContext(), w3);
-        WordDAL.insertWord(getApplicationContext(), w4);
+//        Word w1 = new Word("the", "the the", 1, 0, (new Date()).getTime());
+//        Word w2 = new Word("the2", "the the2", 0, 0, (new Date()).getTime());
+//        Word w3 = new Word("the3", "the the3", 1, 0, (new Date()).getTime());
+//        Word w4 = new Word("the4", "the the4", 1, 0, (new Date()).getTime());
+//        WordDAL.insertWord(getApplicationContext(), w1);
+//        WordDAL.insertWord(getApplicationContext(), w2);
+//        WordDAL.insertWord(getApplicationContext(), w3);
+//        WordDAL.insertWord(getApplicationContext(), w4);
+
+
 //
 //        List<Word> result = WordDAL.getAllWords(getApplicationContext(), 1, 2);
 //
@@ -98,7 +109,7 @@ public class DatabaseTestActivity extends ActionBarActivity implements NetworkBa
 //        wResult = WordDAL.getWordByText(getApplicationContext(), "the2");
 //        str += " word by text after update status: " + wResult;
 
-        (new ContentGetter(this)).execute("http://www.howtogeek.com/175641/how-to-boot-and-install-linux-on-a-uefi-pc-with-secure-boot");
+//        (new ContentGetter(this)).execute("http://www.howtogeek.com/174482/what-does-the-ram-slot-color-coding-on-motherboards-mean/");
 
     }
 
@@ -125,12 +136,14 @@ public class DatabaseTestActivity extends ActionBarActivity implements NetworkBa
     @Override
     public void process(Article article) {
         List<String> words = new ArrayList<String>();
-        words.add("embedded");
-        words.add("boot");
-        words.add("hiding");
-        words.add("operating");
-        words.add("add");
-        String html = StringHelper.colorWord(article.content, words, "<font color='red'>", "</font>");
+        words.add("who");
+        words.add("one");
+        words.add("for");
+        words.add("but");
+        words.add("god");
+        words.add("the");
+        String html = StringHelper.colorWord(article.content, words, Config.OPEN_HIGHLIGHT_TAG, Config.CLOSE_HIGHLIGHT_TAG);
+        html = ContentUtils.addCSSJS(html);
 
         webView.loadDataWithBaseURL("", html, "text/html","UTF-8","");
         textView.setText("Result: " + article.toString());

@@ -3,9 +3,9 @@ package com.fpt.helper;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 
 import com.fpt.model.Article;
-import com.fpt.view.DatabaseTestActivity;
 
 /**
  * Created by Quang Trung on 11/16/13.
@@ -23,7 +23,12 @@ public abstract class NetworkBackground extends AsyncTask<String, Void, Article>
 
     public NetworkBackground(INetworkCallback callback) {
         this.callback = callback;
-        dialog = new ProgressDialog((Activity)callback);
+//        if(INetworkCallback.class.isAssignableFrom(Fragment.class)) {
+            Fragment f = (Fragment) callback;
+            dialog = new ProgressDialog(f.getActivity());
+//        } else {
+//            dialog = new ProgressDialog((Activity)callback);
+//        }
     }
 
     @Override

@@ -2,14 +2,13 @@ package com.fpt.model;
 
 import com.fpt.helper.NetworkBackground;
 import com.fpt.util.ParserUtils;
-import com.fpt.view.DatabaseTestActivity;
 
 /**
  * Created by Quang Trung on 11/16/13.
  */
 public class ContentGetter extends NetworkBackground {
 
-    public ContentGetter(DatabaseTestActivity activity) {
+    public ContentGetter(INetworkCallback activity) {
         super(activity);
     }
 

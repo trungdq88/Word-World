@@ -13,8 +13,8 @@ public class HQTUtils {
                 "</head>\n" +
                 "\n" +
                 "<body>\n" +
-                "<h2>Huynh <span class='hkt_highlight'>Quang</span> Thao</h2>\n" +
-                "<h2>Tran <span class='hkt_highlight'>Kim</span> Du</h2>\n" +
+                "<h2>HuynXXh <span class='hkt_highlight'>XXQuang</span> Thao</h2>\n" +
+                "<h2>TranXX <span class='hkt_highlight'>KiXm</span> Du</h2>\n" +
                 "</body>\n" +
                 "</html>\n" +
                 "<script>\n" +
@@ -22,7 +22,6 @@ public class HQTUtils {
                 "for (var i = 0; i < elements.length; i++) {   \n" +
                 "\n" +
                 " elements[i].onclick = function() {\n" +
-                "    console.log(this.innerText);\n" +
                 "\tAndroidCallback.addWord(this.innerText);\n" +
                 " }\n" +
                 "\n" +

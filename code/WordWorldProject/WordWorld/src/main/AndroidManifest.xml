@@ -39,8 +39,15 @@
         </activity>
         <activity
             android:name="com.fpt.view.DatabaseTestActivity"
+            android:exported="true"
             android:label="@string/title_activity_database_test" >
         </activity>
+        <activity
+            android:name="com.fpt.view.test.UnitTestActivity"
+            android:exported="true"
+            android:label="@string/title_activity_database_test" >
+        </activity>
+
         <activity
             android:name="com.fpt.view.AddWordPopup"
             android:label="@string/title_activity_add_word_popup" >
