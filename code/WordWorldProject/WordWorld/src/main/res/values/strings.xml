@@ -42,5 +42,6 @@
     <string name="search_hint_text">SearchHere</string>
     <string name="search_title">Search Here</string>
     <string name="title_activity_head_vocabulary_fragment">Head Vocabulary</string>
+    <string name="title_activity_select_all_word_fragment">Select All Words</string>
 
 </resources>

@@ -18,4 +18,5 @@ public class Config {
 
     public static final String HIGHLIGHTOFF_CLASSNAME = "fptw_highlight_off";
 
+    public static final String ARGUMENT_LIST_WORD_STRING = "argument_list_words_of_string";
 }
