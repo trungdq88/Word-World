@@ -104,4 +104,33 @@ public class ArticleDAL {
                 new String[]{String.valueOf(id)});
         return result > 0;
     }
+    /**
+     * Search all Article have title contain text
+     * @param context
+     * @param text
+     * @return list of Article
+     */
+    public static List<Article> getArticlesSearchByTitle(Context context, String text) {
+        LOGD(TAG, "Get All Articles");
+        WWDatabase ww = new WWDatabase(context);
+        Cursor c = ww.getWritableDatabase().query(Tables.ARTICLE,
+                Query.Projections.ARTICLE_PROJECTION,
+                WWDBContract.Article.TITLE + " LIKE ?",
+                new String[]{"%"+text+"%"},
+                null, null, null);
+        List<Article> listArticles = new ArrayList<Article>();
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex(WWDBContract.Article._ID));
+            String articleUrl = c.getString(c.getColumnIndex(WWDBContract.Article.URL));
+            String articleTitle = c.getString(c.getColumnIndex(WWDBContract.Article.TITLE));
+            String articleContent = c.getString(c.getColumnIndex(WWDBContract.Article.CONTENT));
+            long created = c.getLong(c.getColumnIndex(WWDBContract.Article.CREATED));
+            listArticles.add(new Article(_id, articleUrl, articleTitle, articleContent, created));
+        }
+        if (c != null) {
+            c.close();
+        }
+        return listArticles;
+    }
+
 }

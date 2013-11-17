@@ -34,7 +34,7 @@ public class SortUtils {
             return new Comparator<Word>() {
                 @Override
                 public int compare(Word word, Word word2) {
-                    return word.count - word2.count;
+                    return word2.count - word.count;
                 }
             };
         }

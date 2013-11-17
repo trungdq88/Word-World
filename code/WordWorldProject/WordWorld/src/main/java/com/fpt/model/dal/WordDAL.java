@@ -85,6 +85,40 @@ public class WordDAL {
     }
 
     /**
+     * search word contain text
+     * @param context
+     * @param text
+     * @return List of all word contain text
+     */
+    public static List<Word> getListWordBySearchText(Context context, String text) {
+        LOGD(TAG, "get list of Word like Text");
+        List<Word> list = new ArrayList<Word>();
+        WWDatabase db = new WWDatabase(context);
+        Cursor c = db.getWritableDatabase().query(WWDBContract.Tables.WORD,
+                Query.Projections.WORD_PROJECTION,
+                WWDBContract.Word.THE_WORD + " LIKE ?", // Selection strings
+                new String[]{"%"+text+"%"}, // Select args
+                null, // groyp by
+                null, // having
+                null); // orderby
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            int _id = c.getInt(c.getColumnIndex(WWDBContract.Word._ID));
+            String wordTheWord = c.getString(c.getColumnIndex(WWDBContract.Word.THE_WORD));
+            String wordDescription = c.getString(c.getColumnIndex(WWDBContract.Word.DESCRIPTION));
+            int wordStatus = c.getInt(c.getColumnIndex(WWDBContract.Word.STATUS));
+            int wordCount = c.getInt(c.getColumnIndex(WWDBContract.Word.COUNT));
+            long wordCreated = c.getLong(c.getColumnIndex(WWDBContract.Word.CREATED));
+            Word word = new Word(_id, wordTheWord, wordDescription, wordStatus, wordCount, wordCreated);
+            list.add(word);
+        }
+        if (c != null) {
+            c.close();
+        }
+        return list;
+    }
+
+    /**
      * Get all word with specific status.
      * @param context
      * @param status

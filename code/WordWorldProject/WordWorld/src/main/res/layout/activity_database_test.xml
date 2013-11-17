@@ -6,13 +6,9 @@
     tools:context=".DatabaseTestActivity"
     tools:ignore="MergeRootFrame">
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewDB"
         android:text="@string/hello_world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <WebView
-        android:id="@+id/webViewASD"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
 </FrameLayout>

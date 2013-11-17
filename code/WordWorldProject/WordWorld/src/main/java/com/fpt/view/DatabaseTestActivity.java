@@ -31,9 +31,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.fpt.util.LogUtils.LOGD;
+import static com.fpt.util.LogUtils.makeLogTag;
+
 public class DatabaseTestActivity extends ActionBarActivity implements NetworkBackground.INetworkCallback{
     public TextView textView;
     public WebView webView;
+    private static final String TAG = makeLogTag(DatabaseTestActivity.class);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +51,22 @@ public class DatabaseTestActivity extends ActionBarActivity implements NetworkBa
 
         // delete database
         WWDatabase.deleteDatabase(getApplicationContext());
-
+        //LOGD(TAG,"begin add to db");
         WordDAL.insertWord(getApplicationContext(), new Word("who", "", 1, 1, (new Date()).getTime()));
         WordDAL.insertWord(getApplicationContext(), new Word("one", "", 1, 1, (new Date()).getTime()));
         WordDAL.insertWord(getApplicationContext(), new Word("for", "", 1, 1, (new Date()).getTime()));
         WordDAL.insertWord(getApplicationContext(), new Word("but", "", 1, 1, (new Date()).getTime()));
         WordDAL.insertWord(getApplicationContext(), new Word("the", "", 1, 1, (new Date()).getTime()));
+        LOGD(TAG, "Begin my function");
+        List<Word> list = WordDAL.getListWordBySearchText(getApplicationContext(),"");
+        String str = "";
+        for (Word word : list){
+            str+= word.the_word;
+        }
+        textView = (TextView) findViewById(R.id.textViewDB);
+        textView.setText(str);
+        //LOGD(TAG," after search");
+
 
 //
 //        textView = (TextView) findViewById(R.id.textView);
