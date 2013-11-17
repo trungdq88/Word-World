@@ -24,7 +24,7 @@
         <Button
             android:layout_height="wrap_content"
             android:layout_width="0dp"
-            android:text="Add All"
+            android:text="Add"
             android:layout_weight="5"
             android:id="@+id/addBtn"/>
 

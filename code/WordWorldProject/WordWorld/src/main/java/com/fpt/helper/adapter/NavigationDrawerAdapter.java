@@ -57,7 +57,7 @@ public class NavigationDrawerAdapter {
                 holder = new ViewHolderHeader();
                 holder.txtName = (TextView) row.findViewById(R.id.name);
                 holder.txtMail = (TextView) row.findViewById(R.id.mail);
-                holder.imgAvatar = (ImageView) row.findViewById(R.id.imageView);
+                holder.imgAvatar = (ImageView) row.findViewById(R.id.imageViewInfo);
                 row.setTag(holder);
             }
             else {
@@ -65,8 +65,8 @@ public class NavigationDrawerAdapter {
             }
 
             // assign value to view
-            holder.txtName.setText("huynh quang thao");
-            holder.txtMail.setText("quangthao@gmail");
+            holder.txtName.setText("Your vocabs");
+            holder.txtMail.setText("HACK@THON 2013");
             holder.imgAvatar.setImageResource(R.drawable.abc_ic_search);
             return row;
         }
@@ -136,19 +136,19 @@ public class NavigationDrawerAdapter {
 
             switch(position) {
                 case 0:
-                    holder.imageView.setImageResource(R.drawable.abc_ic_search);
+                    holder.imageView.setImageResource(R.drawable.wwicon_welcome);
                     type = TYPE.WELCOME;
                     break;
                 case 1:
-                    holder.imageView.setImageResource(R.drawable.abc_ic_search);
+                    holder.imageView.setImageResource(R.drawable.wwicon_yourwords);
                     type = TYPE.HEAD_VOCABULARY;
                     break;
                 case 2:
-                    holder.imageView.setImageResource(R.drawable.abc_ic_search);
+                    holder.imageView.setImageResource(R.drawable.wwicon_allwords);
                     type = TYPE.ALL_VOCABULARY;
                     break;
                 case 3:
-                    holder.imageView.setImageResource(R.drawable.abc_ic_search);
+                    holder.imageView.setImageResource(R.drawable.wwicon_savedarticles);
                     type = TYPE.SAVE_ARTICLE;
                     break;
             }

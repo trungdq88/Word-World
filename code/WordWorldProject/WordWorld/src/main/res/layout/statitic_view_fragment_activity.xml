@@ -25,6 +25,17 @@
         android:layout_alignLeft="@+id/imageView"
         android:fontFamily="sans-serif-light"
         android:layout_marginTop="31dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Seen words:"
+        android:id="@+id/txtAllWords"
+        android:layout_below="@+id/txtTotalWord"
+        android:fontFamily="sans-serif-light"
+        android:layout_alignLeft="@+id/txtTotalWord" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -33,7 +44,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/total_article_string"
         android:id="@+id/txtTotalArticle"
-        android:layout_below="@+id/txtTotalWord"
+        android:layout_below="@+id/txtAllWords"
         android:fontFamily="sans-serif-light"
         android:layout_alignLeft="@+id/txtTotalWord" />
-    </RelativeLayout>
+
+
+</RelativeLayout>
