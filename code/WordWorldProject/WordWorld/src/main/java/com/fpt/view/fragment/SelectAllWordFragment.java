@@ -15,6 +15,8 @@ import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -57,6 +59,9 @@ public class SelectAllWordFragment extends Fragment {
    /** List all String should to be added to database */
    List<String> words;
 
+    /** Checkbox use for check all */
+    CheckBox checkallCheckbox;
+
     public SelectAllWordFragment() {
 
     }
@@ -78,7 +83,7 @@ public class SelectAllWordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_head_vocabulary, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_select_all_word_with_check_all, container, false);
 
         // inflat layout
 
@@ -92,7 +97,20 @@ public class SelectAllWordFragment extends Fragment {
         Button btnAdd = (Button) rootView.findViewById(R.id.addBtn);
         Button btnDone = (Button) rootView.findViewById(R.id.doneBtn);
 
+        // check box
+        checkallCheckbox = (CheckBox) rootView.findViewById(R.id.check_all);
+
         // add action
+        checkallCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                boolean[] checked = new boolean[words.size()];
+                Arrays.fill(checked, b);
+                adapter.checked = checked;
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,7 +136,7 @@ public class SelectAllWordFragment extends Fragment {
                 }
                 // update check array
                 checked = new boolean[newWordList.size()];
-                Arrays.fill(checked, true);
+                Arrays.fill(checked, false);
 
                 // update model
                 words = newWordList;

@@ -30,7 +30,7 @@ public class SelectMultiWordAdapter extends BaseAdapter {
         this.mContext = context;
         this.words = words;
         checked = new boolean[words.size()];
-        Arrays.fill(checked, true);
+        Arrays.fill(checked, false);
     }
 
     @Override

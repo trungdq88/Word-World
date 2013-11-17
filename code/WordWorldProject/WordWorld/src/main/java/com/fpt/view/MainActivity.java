@@ -153,6 +153,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerA
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if(mDrawerToggle.onOptionsItemSelected(item))
+        {
+            return true;
+        }
         if (id == R.id.action_settings) {
             return true;
         }
