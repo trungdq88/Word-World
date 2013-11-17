@@ -73,6 +73,9 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
     View rootView;
     private int articleId;
 
+    /** currently article of webview fragment */
+    public Article article;
+
     public WebviewFragment() {
 
     }
@@ -294,6 +297,8 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
             refreshWebView("<h1>Could not connect to internet! Please check your connection and try again</h1>");
             return;
         }
+
+        this.article = article;
 
         // Step 2:
         // Step 1 - Step 2: Internet

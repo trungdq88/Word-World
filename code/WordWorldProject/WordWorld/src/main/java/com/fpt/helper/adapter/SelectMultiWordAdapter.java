@@ -30,7 +30,7 @@ public class SelectMultiWordAdapter extends BaseAdapter {
         this.mContext = context;
         this.words = words;
         checked = new boolean[words.size()];
-        Arrays.fill(checked, true);
+        Arrays.fill(checked, false);
     }
 
     @Override
@@ -55,10 +55,10 @@ public class SelectMultiWordAdapter extends BaseAdapter {
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (row == null) {
-            row = inflater.inflate(R.layout.list_item_allvocabulary, null);
+            row = inflater.inflate(R.layout.list_item_select_multi_word, null);
             holder = new ViewHolder();
-            holder.wordTextView = (TextView) row.findViewById(R.id.txtWord);
-            holder.checkBox = (CheckBox) row.findViewById(R.id.checked_box);
+            holder.wordTextView = (TextView) row.findViewById(R.id.wordTextView);
+            holder.checkBox = (CheckBox) row.findViewById(R.id.checkbox);
             row.setTag(holder);
         }
         else {

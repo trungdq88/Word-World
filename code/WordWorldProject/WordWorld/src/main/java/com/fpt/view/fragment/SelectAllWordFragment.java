@@ -26,6 +26,7 @@ import com.fpt.model.dal.WordDAL;
 import com.fpt.util.SortUtils;
 import com.fpt.view.MainActivity;
 import com.fpt.view.R;
+import com.fpt.view.SharedActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -66,7 +67,8 @@ public class SelectAllWordFragment extends Fragment {
         super.onAttach(activity);
         this.activity = activity;
         if (getArguments().getSerializable(Config.ARGUMENT_LIST_WORD_STRING) != null) {
-            words = (List<String>) getArguments().getSerializable(Config.ARGUMENT_LIST_WORD_STRING);
+            SharedActivity.CustomObject obj = (SharedActivity.CustomObject) getArguments().getSerializable(Config.ARGUMENT_LIST_WORD_STRING);
+            words = obj.words;
         }
     }
 
@@ -78,7 +80,7 @@ public class SelectAllWordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_head_vocabulary, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_select_all_word, container, false);
 
         // inflat layout
 
@@ -112,13 +114,14 @@ public class SelectAllWordFragment extends Fragment {
                 }
 
                 // 2. update again model
+                // remove all words has checked (because has added to database)
                 List<String> newWordList  = new ArrayList<String>();
                 for (int i = 0; i < checked.length; i++) {
-                    if (checked[i]) newWordList.add(words.get(i));
+                    if (!checked[i]) newWordList.add(words.get(i));
                 }
                 // update check array
                 checked = new boolean[newWordList.size()];
-                Arrays.fill(checked, true);
+                Arrays.fill(checked, false);
 
                 // update model
                 words = newWordList;

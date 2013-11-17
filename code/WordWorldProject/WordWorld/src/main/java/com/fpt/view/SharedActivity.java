@@ -1,6 +1,7 @@
 package com.fpt.view;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -12,8 +13,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.fpt.config.Config;
+import com.fpt.model.Article;
 import com.fpt.provider.WWDatabase;
+import com.fpt.util.StringBuilderHelper;
+import com.fpt.view.fragment.SelectAllWordFragment;
 import com.fpt.view.fragment.WebviewFragment;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class SharedActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
@@ -24,6 +31,8 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
     WebviewFragment fragment;
+
+    Article article;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,9 +129,23 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
         } else if (id == 1) {
             fragment.callJsHighlightOff();
         } else if (id == 2) {
-
+            // get all strings from web page
+            List<String> listWord = StringBuilderHelper.getListWord(fragment.article.content);
+            CustomObject obj = new CustomObject(listWord);
+            Fragment newFragment = new SelectAllWordFragment();
+            Bundle arguments = new Bundle();
+            arguments.putSerializable(Config.ARGUMENT_LIST_WORD_STRING, obj);
+            newFragment.setArguments(arguments);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.container, newFragment).commit();
         }
-
         return true;
+    }
+
+    public static class CustomObject implements Serializable {
+        public List<String> words;
+        public CustomObject(List<String> words) {
+            this.words = words;
+        }
     }
 }
