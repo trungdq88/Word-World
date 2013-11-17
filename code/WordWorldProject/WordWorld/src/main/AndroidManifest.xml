@@ -81,6 +81,10 @@
             android:name="com.fpt.view.HeadVocabularyFragment"
             android:label="@string/title_activity_head_vocabulary_fragment" >
         </activity>
+        <activity
+            android:name="com.fpt.view.SelectAllWordFragment"
+            android:label="@string/title_activity_select_all_word_fragment" >
+        </activity>
     </application>
 
 </manifest>

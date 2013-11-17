@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.fpt.model.Word;
 import com.fpt.view.R;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,11 +22,15 @@ import java.util.List;
 public class SelectMultiWordAdapter extends BaseAdapter {
     Context mContext;
 
-    public List<Word> words;
+    public List<String> words;
 
-    public SelectMultiWordAdapter(Context context, List<Word> words) {
+    public boolean[] checked;
+
+    public SelectMultiWordAdapter(Context context, List<String> words) {
         this.mContext = context;
         this.words = words;
+        checked = new boolean[words.size()];
+        Arrays.fill(checked, true);
     }
 
     @Override
@@ -52,14 +58,23 @@ public class SelectMultiWordAdapter extends BaseAdapter {
             row = inflater.inflate(R.layout.list_item_allvocabulary, null);
             holder = new ViewHolder();
             holder.wordTextView = (TextView) row.findViewById(R.id.txtWord);
+            holder.checkBox = (CheckBox) row.findViewById(R.id.checked_box);
             row.setTag(holder);
         }
         else {
             holder = (ViewHolder) row.getTag();
         }
 
-        holder.wordTextView.setText(words.get(position).the_word);
-        // holder.descriptionTextView.setText(words.get(position).description);
+        holder.wordTextView.setText(words.get(position));
+        holder.checkBox.setChecked(checked[position]);
+
+        // add listener for checked box
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                checked[position] = b;
+            }
+        });
 
         return row;
     }
