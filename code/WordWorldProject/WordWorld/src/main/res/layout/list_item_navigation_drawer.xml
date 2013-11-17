@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/abc_ic_menu_share_holo_dark"
+        android:src="@drawable/ic_launcher"
         android:contentDescription="@null" />
 
     <TextView

@@ -67,7 +67,7 @@ public class NavigationDrawerAdapter {
             // assign value to view
             holder.txtName.setText("Your vocabs");
             holder.txtMail.setText("HACK@THON 2013");
-            holder.imgAvatar.setImageResource(R.drawable.abc_ic_search);
+            holder.imgAvatar.setImageResource(R.drawable.wwicon_home);
             return row;
         }
     }

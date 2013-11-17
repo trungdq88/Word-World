@@ -60,6 +60,8 @@ public class StatiticViewFragment extends Fragment {
         TextView txtTotalArticle = (TextView) rootView.findViewById(R.id.txtTotalArticle);
         txtTotalArticle.setText(getString(R.string.total_article_string) + " " + ArticleDAL.getAllArticles(activity.getApplicationContext()).size());
 
+        TextView txtSeenWords = (TextView) rootView.findViewById(R.id.txtAllWords);
+        txtSeenWords.setText("Seen words: " + WordDAL.getAllWords(activity.getApplicationContext()).size());
 
         return rootView;
     }

@@ -28,8 +28,8 @@
         <item>Recent</item>
     </array>
     <array name="search_article_option">
-        <item>Thứ tự ABC</item>
-        <item>Gần đây</item>
+        <item>ABC Order</item>
+        <item>Recent</item>
     </array>
 
     <string name="title_activity_all_vocabulary_fragment">All Vocabulary</string>
