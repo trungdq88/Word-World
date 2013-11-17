@@ -8,6 +8,8 @@
         android:layout_gravity="end|center_vertical"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:src="@drawable/abc_ic_menu_share_holo_dark"
         android:contentDescription="@null" />
 
