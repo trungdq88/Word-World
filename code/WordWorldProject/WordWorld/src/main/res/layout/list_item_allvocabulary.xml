@@ -8,11 +8,13 @@
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:textColor="#000000"
         android:id="@+id/txtWord"/>
 
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:textColor="#ff595959"
         android:id="@+id/txtDescription"/>
 
 </LinearLayout>

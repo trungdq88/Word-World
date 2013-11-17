@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.fpt.config.Config;
 import com.fpt.provider.WWDatabase;
 import com.fpt.view.fragment.WebviewFragment;
 
@@ -22,7 +23,6 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
      */
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
-    public String linkWebPage = "";
     WebviewFragment fragment;
 
     @Override
@@ -57,11 +57,12 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
 
         /** extra parameters send from browser */
         Intent intent = this.getIntent();
-        linkWebPage = intent.getStringExtra(Intent.EXTRA_TEXT);
+        String linkWebPage = intent.getStringExtra(Intent.EXTRA_TEXT);
 
 
         fragment = new WebviewFragment();
         Bundle arguments = new Bundle();
+        arguments.putString(Config.ARGUMENT_LINKWEBPAGE, linkWebPage);
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment).commit();
@@ -118,6 +119,8 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
             fragment.callJsHighlightOn();
         } else if (id == 1) {
             fragment.callJsHighlightOff();
+        } else if (id == 2) {
+
         }
 
         return true;

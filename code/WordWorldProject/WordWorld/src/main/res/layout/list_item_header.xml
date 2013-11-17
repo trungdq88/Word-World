@@ -43,7 +43,7 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Huynh Quang Thao"
+            android:text="Your vocabulary"
             android:paddingBottom="3dp"
             android:textColor="#bec1ca"
             android:id="@+id/name"
@@ -56,7 +56,7 @@
             android:paddingBottom="5dp"
             android:id="@+id/mail"
             android:textColor="#bec1ca"
-            android:text="quangthao93@yahoo"
+            android:text="Hack@thon 2013"
             />
     </LinearLayout>
 

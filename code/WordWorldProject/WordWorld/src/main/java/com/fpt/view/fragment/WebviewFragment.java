@@ -41,6 +41,7 @@ import com.fpt.util.DisplayUtils;
 import com.fpt.util.HQTUtils;
 import com.fpt.util.StringBuilderHelper;
 import com.fpt.util.StringHelper;
+import com.fpt.view.MainActivity;
 import com.fpt.view.R;
 import com.fpt.view.SharedActivity;
 
@@ -53,7 +54,9 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
     /**
      * parent activity
      */
-    SharedActivity activity;
+    Activity activity;
+
+    String linkWebPage;
 
     /**
      * using Handler for manipulated UI Thread
@@ -68,6 +71,7 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
     long begin2;
 
     View rootView;
+    private int articleId;
 
     public WebviewFragment() {
 
@@ -76,7 +80,18 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.activity = (SharedActivity) activity;
+//        if (activity instanceof SharedActivity) {
+//            this.activity = (SharedActivity) activity;
+//        } else if (activity instanceof MainActivity) {
+//            this.activity = (MainActivity) activity;
+//        }
+        this.activity = activity;
+        Bundle arguments = getArguments();
+        if (arguments.get(Config.ARGUMENT_LINKWEBPAGE) != null) {
+            this.linkWebPage = (String) arguments.get(Config.ARGUMENT_LINKWEBPAGE);
+        } else if (arguments.get(Config.ARGUMENT_ARTICLE) != null) {
+            this.articleId = (Integer) arguments.get(Config.ARGUMENT_ARTICLE);
+        }
     }
 
     @Override
@@ -102,13 +117,27 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
 
 
         // Load from "share to" option
-        if (activity.linkWebPage != null && !activity.linkWebPage.isEmpty()) {
+        if (linkWebPage != null && !linkWebPage.isEmpty()) {
             // Step 1
             begin2 = (new Date()).getTime();
-            (new ContentGetter(this)).execute(activity.linkWebPage);
+            (new ContentGetter(this)).execute(linkWebPage);
         } else {
             // Load from other activities
-            webView.loadDataWithBaseURL("", HQTUtils.generateHTML(), "text/html", "UTF-8", "");
+            Article article = ArticleDAL.getArticleById(activity.getApplicationContext(), articleId);
+
+            // Get all word in database with status 0 ("remembered")
+            List<String> allWords = StringBuilderHelper.getListWord(article.content);
+            List<Word> rememberedWords = WordDAL.getAllWordsWithStatus(activity.getApplicationContext(), 0);
+
+            String html = StringBuilderHelper.colorAllWord(article.content,
+                    DisplayUtils.listWordToListString(rememberedWords), allWords,
+                    Config.OPEN_HIGHLIGHT_TAG, Config.CLOSE_HIGHLIGHT_TAG,
+                    Config.OPEN_NO_HIGHLIGHT_TAG, Config.CLOSE_NO_HIGHLIGHT_TAG);
+
+
+            html = ContentUtils.addCSSJS(html);
+
+            webView.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
         }
         return rootView;
     }
@@ -145,7 +174,7 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
 
         // assign text to word TextView
         txtWord.setText(word);
-        if (activity.linkWebPage != null) {
+        if (linkWebPage != null) {
             txtWord.setText(word);
         }
 
@@ -279,26 +308,44 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         // Get all word
 
         long begin3 = (new Date()).getTime();
-        List<String> allWords = StringBuilderHelper.getListWord(article.content);
+        final List<String> allWords = StringBuilderHelper.getListWord(article.content);
         long end3 = (new Date()).getTime();
         Log.i("TimingDebug", "Alorithm 1: " + (end3-begin3)+"");
 
         // Insert database
+        final long begin4 = (new Date()).getTime();
+        // Use new thread to insert to database, for performance purpose
+        Thread thread = new Thread()
+        {
+            @Override
+            public void run() {
+                try {
+                    for (String word : allWords) {
+                        Word w = WordDAL.getWordByText(activity.getApplicationContext(), word);
+                        // If the word is not exists in database, then insert it.
+                        if (w == null) {
+                            WordDAL.insertWord(activity.getApplicationContext(), new Word(word, "", 0, 1, (new Date()).getTime()));
+                        } else {
+                            // If the word is already in database, then increase the counter
+                            WordDAL.updateSeenCount(activity.getApplicationContext(), w.id);
+                        }
+                    }
 
-        long begin4 = (new Date()).getTime();
-        for (String word : allWords) {
-            Word w = WordDAL.getWordByText(activity.getApplicationContext(), word);
-            // If the word is not exists in database, then insert it.
-            if (w == null) {
-                WordDAL.insertWord(activity.getApplicationContext(), new Word(word, "", 0, 1, (new Date()).getTime()));
-            } else {
-                // If the word is already in database, then increase the counter
-                WordDAL.updateSeenCount(activity.getApplicationContext(), w.id);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                // Step 4:
+                // Step 3 - 4: Database
+                long end4 = (new Date()).getTime();
+                Log.i("TimingDebug", "Database: " + (end4-begin4)+"");
             }
-        }
+        };
+
+        thread.start();
 
         // Get all word in database with status 0 ("remembered")
-        List<Word> rememberedWords = WordDAL.getAllWordsWithStatus(activity.getApplicationContext(), 0);
+        List<Word> rememberedWords = WordDAL.getAllWordsWithStatus(activity.getApplicationContext(), 1);
 
         // Step 4:
         // Step 3 - 4: Database
@@ -309,11 +356,15 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         // Step 5
         // Get the color - tagged string
 
+        rememberedWords.add(new Word("h","h",0,0,0));
+//        Log.i("DatabaseDebubg", "rememberedWords: " + DisplayUtils.arrayToString(DisplayUtils.listWordToListString(rememberedWords)));
+//        Log.i("DatabaseDebubg", "allWords: " + DisplayUtils.arrayToString(allWords));
+
         long begin5 = (new Date()).getTime();
         String html = StringBuilderHelper.colorAllWord(article.content,
                 DisplayUtils.listWordToListString(rememberedWords), allWords,
-                Config.OPEN_HIGHLIGHT_TAG, Config.CLOSE_HIGHLIGHT_TAG,
-                Config.OPEN_NO_HIGHLIGHT_TAG, Config.CLOSE_NO_HIGHLIGHT_TAG);
+                Config.OPEN_NO_HIGHLIGHT_TAG, Config.CLOSE_NO_HIGHLIGHT_TAG,
+                Config.OPEN_HIGHLIGHT_TAG, Config.CLOSE_HIGHLIGHT_TAG);
         long end5 = (new Date()).getTime();
         // Step 6
         // Step 5 - 6: algorithm

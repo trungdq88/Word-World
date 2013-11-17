@@ -70,8 +70,8 @@ public class WWDatabase extends SQLiteOpenHelper {
                 + ArticleColumns.TITLE + " TEXT NOT NULL,"
                 + ArticleColumns.URL + " TEXT NOT NULL,"
                 + ArticleColumns.CREATED + " INTEGER NOT NULL,"
-                + "UNIQUE (" + BaseColumns._ID + ") ON CONFLICT REPLACE"
-                + "UNIQUE (" + ArticleColumns.URL + ") ON CONFLICT REPLACE"
+                + "UNIQUE (" + BaseColumns._ID + ") ON CONFLICT REPLACE "
+                + "UNIQUE (" + ArticleColumns.URL + ") ON CONFLICT REPLACE "
                 + ")");
 
         /**

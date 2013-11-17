@@ -17,6 +17,9 @@
         android:layout_weight="1"
         android:text="Category"
         android:textColor="#e7ecf0"
+        android:textSize="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start|center_vertical" />
 

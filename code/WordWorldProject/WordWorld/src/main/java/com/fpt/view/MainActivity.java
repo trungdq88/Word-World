@@ -21,6 +21,7 @@ import android.widget.ListView;
 
 import com.fpt.helper.adapter.MergeAdapter;
 import com.fpt.helper.adapter.NavigationDrawerAdapter;
+import com.fpt.provider.WWDatabase;
 import com.fpt.unittest.DatabaseTest;
 import com.fpt.util.UIUtils;
 import com.fpt.view.com.fpt.view.fragment.StatiticViewFragment;
@@ -68,6 +69,9 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerA
 
         mTitle = getTitle();
 
+        // Delete database;
+//         WWDatabase.deleteDatabase(getApplicationContext());
+
         // Set up the drawer.
         setUpActionBar();
 
@@ -80,8 +84,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerA
         fragment.setArguments(arguments);
         switchFragment(fragment);
 
-        // Temporary generate article
-        DatabaseTest.test_getAllArticles(getApplicationContext());
     }
 
     /**
