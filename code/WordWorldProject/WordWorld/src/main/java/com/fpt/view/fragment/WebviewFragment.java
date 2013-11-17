@@ -330,10 +330,6 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         webView.loadDataWithBaseURL("", html, "text/html", "UTF-8", "");
     }
 
-    private void testCallJs() {
-        Log.i("CallJSDebug", "called!");
-        webView.loadUrl("javascript:document.write('asd')");
-    }
 
     private void callJsUnwrap(String unique_seq) {
         webView.loadUrl("javascript:unwrap_word('"+unique_seq+"')");
@@ -343,7 +339,10 @@ public class WebviewFragment extends Fragment implements NetworkBackground.INetw
         webView.loadUrl("javascript:wrap_word('"+unique_seq+"')");
     }
 
-    private void callJsHighlightOn() {
-        webView.loadUrl("javascript:highlight_on()");
+    public void callJsHighlightOn() {
+        webView.loadUrl("javascript:turn_highlight_on()");
+    }
+    public void callJsHighlightOff() {
+        webView.loadUrl("javascript:turn_highlight_off()");
     }
 }
