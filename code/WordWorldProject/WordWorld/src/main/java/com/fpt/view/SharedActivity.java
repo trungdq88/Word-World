@@ -59,6 +59,7 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
                                 getString(R.string.title_section1),
                                 getString(R.string.title_section2),
                                 getString(R.string.title_section3),
+                                "Main Menu",
                         }),
                 this);
 
@@ -138,6 +139,10 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
             newFragment.setArguments(arguments);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.container, newFragment).commit();
+        }
+        else if (id == 3) {
+            Intent myIntent = new Intent(SharedActivity.this, MainActivity.class);
+            SharedActivity.this.startActivity(myIntent);
         }
         return true;
     }

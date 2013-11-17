@@ -9,6 +9,7 @@
         android:layout_width="fill_parent"
         android:textColor="#000"
         android:textSize="20dp"
+        android:textStyle="bold"
         android:id="@+id/articleTxt"
         android:layout_marginTop="5dp"/>
 

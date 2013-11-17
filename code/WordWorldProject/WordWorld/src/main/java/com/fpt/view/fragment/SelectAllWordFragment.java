@@ -121,7 +121,7 @@ public class SelectAllWordFragment extends Fragment {
                 }
                 // update check array
                 checked = new boolean[newWordList.size()];
-                Arrays.fill(checked, false);
+                Arrays.fill(checked, true);
 
                 // update model
                 words = newWordList;
