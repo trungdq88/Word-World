@@ -23,6 +23,7 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
     public String linkWebPage = "";
+    WebviewFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
         linkWebPage = intent.getStringExtra(Intent.EXTRA_TEXT);
 
 
-        Fragment fragment = new WebviewFragment();
+        fragment = new WebviewFragment();
         Bundle arguments = new Bundle();
         fragment.setArguments(arguments);
         getSupportFragmentManager().beginTransaction()
@@ -113,7 +114,11 @@ public class SharedActivity extends ActionBarActivity implements ActionBar.OnNav
         // When the given dropdown item is selected, show its contents in the
         // container view.
 
-
+        if (id == 0) {
+            fragment.callJsHighlightOn();
+        } else if (id == 1) {
+            fragment.callJsHighlightOff();
+        }
 
         return true;
     }

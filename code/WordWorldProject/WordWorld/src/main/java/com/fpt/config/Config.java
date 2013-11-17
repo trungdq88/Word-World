@@ -14,6 +14,8 @@ public class Config {
     public static final String OPEN_NO_HIGHLIGHT_TAG = "<span class='"+NO_HIGHLIGHT_CLASSNAME+"'>";
     public static final String CLOSE_NO_HIGHLIGHT_TAG = "</span>";
 
-
     public static final String ARGUMENT_ARTICLE = "OFFLINE_VIEW_ALL_ARTICLES";
+
+    public static final String HIGHLIGHTOFF_CLASSNAME = "fptw_highlight_off";
+
 }

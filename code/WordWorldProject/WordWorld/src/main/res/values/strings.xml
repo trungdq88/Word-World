@@ -2,9 +2,9 @@
 <resources>
 
     <string name="app_name">My vocabulary</string>
-    <string name="title_section1">Statistics</string>
-    <string name="title_section2">My vocabs</string>
-    <string name="title_section3">All words</string>
+    <string name="title_section1">Highlight ON</string>
+    <string name="title_section2">Highlight OFF</string>
+    <string name="title_section3">View All Words</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
