@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.fpt.model.Word;
@@ -61,7 +62,7 @@ public class AllVocabularyAdapter extends BaseAdapter {
         }
 
         holder.wordTextView.setText(words.get(position).the_word);
-        holder.descriptionTextView.setText(words.get(position).description);
+        holder.descriptionTextView.setText("Seen: " + words.get(position).count + " | " + words.get(position).description);
 
         return row;
     }

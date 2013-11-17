@@ -55,7 +55,7 @@ public class AllArticleAdapter extends BaseAdapter{
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (row == null) {
-            row = inflater.inflate(R.layout.list_item_allvocabulary, null);
+            row = inflater.inflate(R.layout.list_item_all_article, null);
             holder = new ViewHolder();
             holder.articleTextView = (TextView) row.findViewById(R.id.articleTxt);
             holder.urlTextView = (TextView) row.findViewById(R.id.urlTxt);

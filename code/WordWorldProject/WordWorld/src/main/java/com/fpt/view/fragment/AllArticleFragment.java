@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.fpt.config.Config;
 import com.fpt.helper.adapter.AllArticleAdapter;
 import com.fpt.model.Article;
 import com.fpt.model.dal.ArticleDAL;
@@ -79,6 +80,19 @@ public class AllArticleFragment extends Fragment implements AdapterView.OnItemSe
         articles = ArticleDAL.getAllArticles(getActivity().getApplicationContext());
         adapter = new AllArticleAdapter(getActivity().getApplicationContext(), articles);
         mListView.setAdapter(adapter);
+
+        // add event for click item in list view
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // open WebView Fragment
+                Fragment webViewFragment = new WebviewFragment();
+                Bundle arguments = new Bundle();
+                arguments.putInt(Config.ARGUMENT_ARTICLE, ((Article)adapter.getItem(i)).id);
+                webViewFragment.setArguments(arguments);
+                activity.switchFragment(webViewFragment);
+            }
+        });
 
         return rootView;
     }

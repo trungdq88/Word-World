@@ -77,9 +77,9 @@ public class NavigationDrawerAdapter {
         private static String TAG = makeLogTag(ItemAdapter.class);
 
         public enum TYPE {
+            WELCOME,
             HEAD_VOCABULARY,
             ALL_VOCABULARY,
-            STATISTIC,
             SAVE_ARTICLE,
         }
 
@@ -137,15 +137,15 @@ public class NavigationDrawerAdapter {
             switch(position) {
                 case 0:
                     holder.imageView.setImageResource(R.drawable.abc_ic_search);
-                    type = TYPE.HEAD_VOCABULARY;
+                    type = TYPE.WELCOME;
                     break;
                 case 1:
                     holder.imageView.setImageResource(R.drawable.abc_ic_search);
-                    type = TYPE.ALL_VOCABULARY;
+                    type = TYPE.HEAD_VOCABULARY;
                     break;
                 case 2:
                     holder.imageView.setImageResource(R.drawable.abc_ic_search);
-                    type = TYPE.STATISTIC;
+                    type = TYPE.ALL_VOCABULARY;
                     break;
                 case 3:
                     holder.imageView.setImageResource(R.drawable.abc_ic_search);
@@ -185,7 +185,6 @@ public class NavigationDrawerAdapter {
 
     public static interface IItemDelegate {
         void gotoCategoryPage(ItemAdapter.TYPE type);
-
     }
 
 }

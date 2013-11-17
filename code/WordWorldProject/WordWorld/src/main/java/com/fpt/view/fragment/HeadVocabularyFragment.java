@@ -1,5 +1,6 @@
 package com.fpt.view.fragment;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,56 +11,108 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Spinner;
 
-public class HeadVocabularyFragment extends ActionBarActivity {
+import com.fpt.helper.adapter.AllVocabularyAdapter;
+import com.fpt.model.Word;
+import com.fpt.model.dal.WordDAL;
+import com.fpt.util.SortUtils;
+import com.fpt.view.MainActivity;
+import com.fpt.view.R;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_head_vocabulary);
+import java.util.List;
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
-    }
+import static com.fpt.util.LogUtils.makeLogTag;
+
+public class HeadVocabularyFragment extends Fragment   implements AdapterView.OnItemSelectedListener {
+
+    public static String TAG = makeLogTag(HeadVocabularyFragment.class);
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.head_vocabulary, menu);
-        return true;
-    }
+    /** Main Activity for reference */
+    MainActivity activity;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    /** spinner of this fragment
+     */
+    Spinner spinner;
 
     /**
-     * A placeholder fragment containing a simple view.
+     * ListView contains all vocabularies
      */
-    public static class PlaceholderFragment extends Fragment {
+    ListView mListView;
 
-        public PlaceholderFragment() {
-        }
+    /** adapter for word listview */
+    AllVocabularyAdapter adapter;
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_head_vocabulary, container, false);
-            return rootView;
-        }
+    /** list all articles currently in database */
+    List<Word> words;
+
+    public HeadVocabularyFragment() {
+
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = (MainActivity) activity;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_head_vocabulary, container, false);
+
+        // inflat layout
+        spinner = (Spinner) rootView.findViewById(R.id.spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> searchChoices = ArrayAdapter.
+                createFromResource(getActivity().getApplicationContext(),
+                        R.array.search_option, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        searchChoices.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(searchChoices);    // Apply the adapter to the spinner
+        spinner.setOnItemSelectedListener(this);   // because this fragment has implemented method
+
+        // ListView Configure
+        mListView = (ListView) rootView.findViewById(R.id.listview);
+        words = WordDAL.getAllWordsWithStatus(getActivity().getApplicationContext(), 1);
+
+        // we can use same adapter of others. because all is same !!!!
+        adapter = new AllVocabularyAdapter(getActivity().getApplicationContext(), words);
+        mListView.setAdapter(adapter);
+
+        return rootView;
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch(i) {
+            case 0 :
+                SortUtils.sortWordByABC(words);
+                break;
+            case 1:
+                SortUtils.sortWordByTimes(words);
+                break;
+            case 2:
+                SortUtils.sortWordByRecentTime(words);
+                break;
+        }
+        // notify to adapter
+        adapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

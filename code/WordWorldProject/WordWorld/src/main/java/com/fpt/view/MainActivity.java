@@ -19,10 +19,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.fpt.helper.adapter.MergeAdapter;
+import com.fpt.helper.adapter.NavigationDrawerAdapter;
+import com.fpt.unittest.DatabaseTest;
 import com.fpt.util.UIUtils;
-import com.fpt.view.fragment.NavigationDrawerFragment;
+import com.fpt.view.com.fpt.view.fragment.StatiticViewFragment;
+import com.fpt.view.fragment.AllArticleFragment;
+import com.fpt.view.fragment.AllVocabularyFragment;
+import com.fpt.view.fragment.HeadVocabularyFragment;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements NavigationDrawerAdapter.IItemDelegate {
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -43,6 +49,13 @@ public class MainActivity extends ActionBarActivity {
      */
     private ActionBarDrawerToggle mDrawerToggle;
 
+    /**
+     * All Adapter for Navigation Drawer
+     */
+    MergeAdapter mergeAdapter;
+    NavigationDrawerAdapter.HeaderAdapter headerAdapter;
+    NavigationDrawerAdapter.ItemAdapter itemAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +69,35 @@ public class MainActivity extends ActionBarActivity {
         mTitle = getTitle();
 
         // Set up the drawer.
-        setUp();
+        setUpActionBar();
 
         // Set up the list view
         setUpListView();
+
+        // Set up default is Welcome Screen
+        Fragment fragment = new StatiticViewFragment();
+        Bundle arguments = new Bundle();
+        fragment.setArguments(arguments);
+        switchFragment(fragment);
+
+        // Temporary generate article
+        DatabaseTest.test_getAllArticles(getApplicationContext());
+    }
+
+    /**
+     * managed code : onResume and onPause
+     * 1. add and remove delegate in those method
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        itemAdapter.setDelegate(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        itemAdapter.setDelegate(null);
     }
 
     public void restoreActionBar() {
@@ -112,9 +150,11 @@ public class MainActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         if (id == R.id.action_settings) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -130,11 +170,10 @@ public class MainActivity extends ActionBarActivity {
         return super.onSearchRequested();
     }
 
-
     /**
      * set up navigation drawer
      */
-    public void setUp() {
+    public void setUpActionBar() {
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -192,6 +231,28 @@ public class MainActivity extends ActionBarActivity {
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
                 }));
+
+
+        /**
+         * Using MergeAdapter for complex view
+         * just create as many type of view in list as we want and Add to this Adapter
+         */
+        mergeAdapter = new MergeAdapter();
+
+        /** setup adapter
+         * create all adapters as we want
+         */
+        // create all adapters as we want
+        headerAdapter = new NavigationDrawerAdapter.HeaderAdapter(getApplicationContext());
+        itemAdapter = new NavigationDrawerAdapter.ItemAdapter(getApplicationContext());
+
+        /** assign each adapter to this composite adapter */
+        mergeAdapter.addAdapter(headerAdapter);
+        mergeAdapter.addAdapter(itemAdapter);
+
+        /** assign this complex adapter to navigation drawer list*/
+        mDrawerListView.setAdapter(mergeAdapter);
+
     }
 
     public boolean isDrawerOpen() {
@@ -199,30 +260,42 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    @Override
+    public void gotoCategoryPage(NavigationDrawerAdapter.ItemAdapter.TYPE type) {
+        Fragment fragment = null;
+        Bundle arguments = new Bundle();
+        switch (type) {
+            case WELCOME:
+                fragment = new StatiticViewFragment();
+                break;
+            case HEAD_VOCABULARY:
+                fragment = new HeadVocabularyFragment();
+                break;
+            case ALL_VOCABULARY:
+                fragment = new AllVocabularyFragment();
+                break;
+            case SAVE_ARTICLE:
+                fragment = new AllArticleFragment();
+                break;
+        }
 
+        // close Navigation Drawer
+        if (mDrawerListView != null) {
+            // mDrawerListView.setItemChecked(position, true);
+        }
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawer(mDrawerListView);
+        }
 
+        // ... And open new Fragment
+        if (fragment != null) fragment.setArguments(arguments);
+        switchFragment(fragment);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /** others will call this method. MainActivity will replace old with new one fragment */
+    public void switchFragment(Fragment fragment) {
+        if (fragment == null) return;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+    }
 }

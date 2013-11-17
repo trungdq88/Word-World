@@ -79,9 +79,9 @@ public class DatabaseTest {
 
         //Insert articles
         Article article1 = new Article(1, "http://www.google.com.vn", "google", "123", 11);
-        Article article2 = new Article(2, "avds", "google", "123", 11);
-        Article article3 = new Article(3, "dsdsds", "google", "123", 11);
-        Article article4 = new Article(4, "dsvdsv", "google", "123", 11);
+        Article article2 = new Article(2, "www.echip.com.vn", "echip", "123", 11);
+        Article article3 = new Article(3, "www.adobe.com", "adobe", "123", 11);
+        Article article4 = new Article(4, "www.facebook.com", "facebook", "123", 11);
         ArticleDAL.insertArticle(context ,article1);
         ArticleDAL.insertArticle(context ,article2);
         ArticleDAL.insertArticle(context ,article3);

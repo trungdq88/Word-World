@@ -17,9 +17,9 @@
     <string name="title_activity_remove_word_popup">Word detail</string>
 
     <array name="navigation_drawer_item">
+        <item>Welcome</item>
         <item>Vocabulary</item>
         <item>All Vocabulary</item>
-        <item>Statistic</item>
         <item>Save Article</item>
     </array>
     <array name="search_option">
@@ -41,6 +41,6 @@
     <string name="title_activity_search">Search</string>
     <string name="search_hint_text">SearchHere</string>
     <string name="search_title">Search Here</string>
-
+    <string name="title_activity_head_vocabulary_fragment">Head Vocabulary</string>
 
 </resources>
